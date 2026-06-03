@@ -6,7 +6,6 @@ const navItems = [
   { label: "경력", href: "/#career" },
   { label: "기술", href: "/#skills" },
   { label: "이력서", href: "/#resume" },
-  { label: "연락", href: "/#contact" },
 ];
 
 export function Header() {

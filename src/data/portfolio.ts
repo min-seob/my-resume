@@ -7,6 +7,7 @@ import {
   Landmark,
   Mail,
   Newspaper,
+  Phone,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
@@ -29,6 +30,7 @@ export const profile = {
     "백엔드 중심의 금융/결제 도메인 경험을 바탕으로, AI 서비스와 개인 프로덕트까지 직접 기획·개발·배포할 수 있는 개발자입니다.",
   emailPlaceholder: "painseob12@gmail.com",
   secondaryEmailPlaceholder: "painseob11@naver.com",
+  phoneNumber: "010-9639-2198",
 };
 
 export const resumeLinks: ResumeLink[] = [
@@ -343,6 +345,12 @@ export const contactLinks: ContactLink[] = [
     placeholder: profile.secondaryEmailPlaceholder,
     href: `mailto:${profile.secondaryEmailPlaceholder}`,
     icon: Mail,
+  },
+  {
+    label: "Mobile",
+    placeholder: profile.phoneNumber,
+    href: "tel:+821096392198",
+    icon: Phone,
   },
 ];
 

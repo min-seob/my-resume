@@ -1,4 +1,4 @@
-import { ArrowDown, Download, FileText, Mail } from "lucide-react";
+import { ArrowDown, Download, FileText, Mail, Phone } from "lucide-react";
 
 import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Badge } from "@/components/ui/Badge";
@@ -26,6 +26,42 @@ export function HeroSection() {
           <p className="mt-4 max-w-2xl text-base leading-7 text-stone-300">
             {profile.positioning}
           </p>
+
+          <div className="mt-7 grid max-w-2xl gap-3 text-sm sm:grid-cols-3">
+            <a
+              href={`mailto:${profile.emailPlaceholder}`}
+              className="rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
+            >
+              <Mail aria-hidden className="mb-3 h-5 w-5 text-emerald-200" />
+              <span className="block text-xs font-semibold uppercase text-stone-400">
+                Email
+              </span>
+              <span className="mt-1 block break-all font-semibold">{profile.emailPlaceholder}</span>
+            </a>
+            <a
+              href={`mailto:${profile.secondaryEmailPlaceholder}`}
+              className="rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
+            >
+              <Mail aria-hidden className="mb-3 h-5 w-5 text-emerald-200" />
+              <span className="block text-xs font-semibold uppercase text-stone-400">
+                Email 2
+              </span>
+              <span className="mt-1 block break-all font-semibold">
+                {profile.secondaryEmailPlaceholder}
+              </span>
+            </a>
+            <a
+              href="tel:+821096392198"
+              className="rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
+            >
+              <Phone aria-hidden className="mb-3 h-5 w-5 text-emerald-200" />
+              <span className="block text-xs font-semibold uppercase text-stone-400">
+                Mobile
+              </span>
+              <span className="mt-1 block font-semibold">{profile.phoneNumber}</span>
+            </a>
+          </div>
+
           <div className="mt-8 flex flex-wrap gap-3">
             <ButtonLink
               variant={pdfLink.variant}
@@ -48,7 +84,7 @@ export function HeroSection() {
             <ButtonLink href="#projects" variant="secondary" icon={ArrowDown}>
               프로젝트 보기
             </ButtonLink>
-            <ButtonLink href="#contact" variant="secondary" icon={Mail}>
+            <ButtonLink href={`mailto:${profile.emailPlaceholder}`} variant="secondary" icon={Mail}>
               연락하기
             </ButtonLink>
           </div>
@@ -74,6 +110,9 @@ export function HeroSection() {
               </p>
               <p>
                 <span className="text-emerald-300">contact</span>: {profile.emailPlaceholder}
+              </p>
+              <p>
+                <span className="text-emerald-300">mobile</span>: {profile.phoneNumber}
               </p>
             </div>
           </div>

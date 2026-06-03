@@ -1,7 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CareerTimelineSection } from "@/components/sections/CareerTimelineSection";
-import { ContactSection } from "@/components/sections/ContactSection";
 import { CoreStrengthSection } from "@/components/sections/CoreStrengthSection";
 import { FeaturedProjectsSection } from "@/components/sections/FeaturedProjectsSection";
 import { HeroSection } from "@/components/sections/HeroSection";
@@ -21,7 +20,6 @@ export default function Home() {
         <CareerTimelineSection />
         <SkillsSection />
         <ResumeDownloadSection />
-        <ContactSection />
       </main>
       <Footer />
     </>
