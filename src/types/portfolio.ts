@@ -11,7 +11,7 @@ export type ResumeLink = {
   variant: ButtonVariant;
 };
 
-export type ProjectCategory = "금융·결제" | "기업형 AI" | "개인 서비스";
+export type ProjectCategory = "금융·결제" | "기업형 AI" | "개인 서비스" | "금융·공공" | "공공·재난안전" | "교육·공공";
 
 export type Project = {
   title: string;
