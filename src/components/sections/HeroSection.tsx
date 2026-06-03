@@ -27,10 +27,10 @@ export function HeroSection() {
             {profile.positioning}
           </p>
 
-          <div className="mt-7 grid max-w-2xl gap-3 text-sm sm:grid-cols-3">
+          <div className="mt-7 grid max-w-3xl gap-3 text-sm md:grid-cols-2">
             <a
               href={`mailto:${profile.emailPlaceholder}`}
-              className="rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
+              className="min-w-0 rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
             >
               <Mail aria-hidden className="mb-3 h-5 w-5 text-emerald-200" />
               <span className="block text-xs font-semibold uppercase text-stone-400">
@@ -40,7 +40,7 @@ export function HeroSection() {
             </a>
             <a
               href={`mailto:${profile.secondaryEmailPlaceholder}`}
-              className="rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
+              className="min-w-0 rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
             >
               <Mail aria-hidden className="mb-3 h-5 w-5 text-emerald-200" />
               <span className="block text-xs font-semibold uppercase text-stone-400">
@@ -52,7 +52,7 @@ export function HeroSection() {
             </a>
             <a
               href="tel:+821096392198"
-              className="rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
+              className="min-w-0 rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10 md:col-span-2 xl:col-span-1"
             >
               <Phone aria-hidden className="mb-3 h-5 w-5 text-emerald-200" />
               <span className="block text-xs font-semibold uppercase text-stone-400">
@@ -83,9 +83,6 @@ export function HeroSection() {
             </ButtonLink>
             <ButtonLink href="#projects" variant="secondary" icon={ArrowDown}>
               프로젝트 보기
-            </ButtonLink>
-            <ButtonLink href={`mailto:${profile.emailPlaceholder}`} variant="secondary" icon={Mail}>
-              연락하기
             </ButtonLink>
           </div>
         </div>
