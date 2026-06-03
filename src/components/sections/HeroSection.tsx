@@ -10,24 +10,24 @@ export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden border-b border-stone-800 bg-stone-950">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(16,185,129,0.2),transparent_30%),linear-gradient(135deg,rgba(37,99,235,0.16),transparent_34%)]" />
-      <div className="mx-auto grid min-h-[calc(100vh-73px)] max-w-7xl items-center gap-12 px-5 py-16 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
-        <div className="relative">
+      <div className="mx-auto flex min-h-[calc(100vh-73px)] max-w-7xl flex-col justify-center gap-10 px-5 py-16 sm:px-8 lg:py-20">
+        <div className="relative max-w-7xl">
           <div className="mb-6 flex flex-wrap gap-2">
             <Badge>Java/Spring</Badge>
             <Badge>Finance & Payment</Badge>
             <Badge>AI Service</Badge>
           </div>
-          <h1 className="max-w-4xl text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="max-w-none text-4xl font-extrabold leading-tight text-white sm:text-5xl xl:whitespace-nowrap 2xl:text-6xl">
             {profile.headline}
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-stone-200">
+          <p className="mt-6 max-w-4xl text-lg leading-8 text-stone-200">
             {profile.summary}
           </p>
-          <p className="mt-4 max-w-2xl text-base leading-7 text-stone-300">
+          <p className="mt-4 max-w-4xl text-base leading-7 text-stone-300">
             {profile.positioning}
           </p>
 
-          <div className="mt-7 grid max-w-3xl gap-3 text-sm md:grid-cols-2">
+          <div className="mt-7 grid max-w-5xl gap-3 text-sm md:grid-cols-3">
             <a
               href={`mailto:${profile.emailPlaceholder}`}
               className="min-w-0 rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
@@ -52,7 +52,7 @@ export function HeroSection() {
             </a>
             <a
               href="tel:+821096392198"
-              className="min-w-0 rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10 md:col-span-2 xl:col-span-1"
+              className="min-w-0 rounded-md border border-white/10 bg-white/[0.06] p-4 text-stone-200 transition hover:border-emerald-300/60 hover:bg-emerald-400/10"
             >
               <Phone aria-hidden className="mb-3 h-5 w-5 text-emerald-200" />
               <span className="block text-xs font-semibold uppercase text-stone-400">
@@ -95,7 +95,7 @@ export function HeroSection() {
                 deploy-ready
               </span>
             </div>
-            <div className="mt-5 space-y-4 font-mono text-sm leading-7 text-stone-300">
+            <div className="mt-5 grid gap-4 font-mono text-sm leading-7 text-stone-300 md:grid-cols-2 xl:grid-cols-5">
               <p>
                 <span className="text-emerald-300">domain</span>: finance, payment, ai
               </p>
@@ -114,7 +114,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-5 lg:grid-cols-2 xl:grid-cols-5">
+          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {domainSignals.map((signal) => {
               const Icon = signal.icon;
               return (
