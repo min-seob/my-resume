@@ -44,7 +44,7 @@ export function ButtonLink({
     </>
   );
 
-  const className = `inline-flex min-h-11 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold transition ${variantClass[variant]}`;
+  const className = `inline-flex min-h-11 w-full min-w-0 items-center justify-center gap-2 rounded-md border px-4 py-2 text-sm font-semibold transition sm:w-auto ${variantClass[variant]}`;
 
   if (!href) {
     return (

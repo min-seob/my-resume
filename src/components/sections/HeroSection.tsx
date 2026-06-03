@@ -10,17 +10,17 @@ export function HeroSection() {
   return (
     <section id="top" className="relative overflow-hidden border-b border-stone-800 bg-stone-950">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_75%_20%,rgba(16,185,129,0.2),transparent_30%),linear-gradient(135deg,rgba(37,99,235,0.16),transparent_34%)]" />
-      <div className="mx-auto flex min-h-[calc(100vh-73px)] max-w-7xl flex-col justify-center gap-8 px-5 py-16 sm:px-8 lg:py-20">
+      <div className="mx-auto flex min-h-[calc(100vh-73px)] max-w-7xl flex-col justify-center gap-8 px-4 py-14 min-[360px]:px-5 sm:px-8 sm:py-16 lg:py-20">
         <div className="relative max-w-7xl">
           <div className="mb-6 flex flex-wrap gap-2">
             <Badge>Java/Spring</Badge>
             <Badge>Finance & Payment</Badge>
             <Badge>AI Service</Badge>
           </div>
-          <h1 className="max-w-none text-4xl font-extrabold leading-tight text-white sm:text-5xl xl:whitespace-nowrap 2xl:text-6xl">
+          <h1 className="max-w-none text-3xl font-extrabold leading-tight text-white min-[360px]:text-4xl sm:text-5xl xl:whitespace-nowrap 2xl:text-6xl">
             {profile.headline}
           </h1>
-          <p className="mt-6 max-w-none text-lg leading-8 text-stone-200 xl:whitespace-nowrap">
+          <p className="mt-6 max-w-none text-base leading-8 text-stone-200 min-[360px]:text-lg xl:whitespace-nowrap">
             {profile.summary}
           </p>
           <p className="mt-4 max-w-none text-base leading-7 text-stone-300 xl:whitespace-nowrap">
@@ -92,28 +92,28 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="relative rounded-lg border border-white/10 bg-white/[0.06] p-5 shadow-2xl shadow-black/30">
-            <div className="rounded-md border border-stone-200 bg-stone-950 p-5 text-stone-100">
-              <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <div className="relative min-w-0 rounded-lg border border-white/10 bg-white/[0.06] p-3 shadow-2xl shadow-black/30 min-[360px]:p-4 sm:p-5">
+            <div className="min-w-0 rounded-md border border-stone-200 bg-stone-950 p-3 text-stone-100 min-[360px]:p-4 sm:p-5">
+              <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
                 <p className="text-sm font-semibold">service-profile.ts</p>
                 <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-200">
                   deploy-ready
                 </span>
               </div>
-              <div className="mt-5 space-y-4 font-mono text-sm leading-7 text-stone-300">
-                <p className="whitespace-nowrap">
+              <div className="mt-5 min-w-0 space-y-4 font-mono text-xs leading-7 text-stone-300 min-[360px]:text-sm">
+                <p className="break-words [overflow-wrap:anywhere] sm:whitespace-nowrap">
                   <span className="text-emerald-300">domain</span>: finance, payment, ai
                 </p>
-                <p className="whitespace-nowrap">
+                <p className="break-words [overflow-wrap:anywhere] sm:whitespace-nowrap">
                   <span className="text-emerald-300">backend</span>: Java, Spring, Batch, API
                 </p>
-                <p className="whitespace-nowrap">
+                <p className="break-words [overflow-wrap:anywhere] sm:whitespace-nowrap">
                   <span className="text-emerald-300">product</span>: Next.js, LLM, Vercel
                 </p>
-                <p className="whitespace-nowrap">
+                <p className="break-words [overflow-wrap:anywhere] sm:whitespace-nowrap">
                   <span className="text-emerald-300">contact</span>: {profile.emailPlaceholder}
                 </p>
-                <p className="whitespace-nowrap">
+                <p className="break-words [overflow-wrap:anywhere] sm:whitespace-nowrap">
                   <span className="text-emerald-300">mobile</span>: {profile.phoneNumber}
                 </p>
               </div>
