@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/Badge";
 import { SectionTitle } from "@/components/ui/SectionTitle";
-import { skillGroups } from "@/data/portfolio";
+import { credentials, skillGroups, trainingCourses } from "@/data/portfolio";
 
 export function SkillsSection() {
   return (
@@ -24,6 +24,31 @@ export function SkillsSection() {
               </div>
             </article>
           ))}
+        </div>
+        <div className="mt-8 grid gap-5 lg:grid-cols-[0.8fr_1.2fr]">
+          <article className="rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
+            <h3 className="text-base font-bold text-stone-950">자격 및 기본 정보</h3>
+            <dl className="mt-5 space-y-4 text-sm">
+              {credentials.map((item) => (
+                <div key={item.label}>
+                  <dt className="font-semibold text-stone-500">{item.label}</dt>
+                  <dd className="mt-1 text-stone-900">{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </article>
+          <article className="rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
+            <h3 className="text-base font-bold text-stone-950">교육 이수</h3>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              {trainingCourses.map((course) => (
+                <div key={course.title} className="rounded-md border border-stone-200 bg-[#fbfaf7] p-4">
+                  <p className="text-sm font-bold leading-6 text-stone-950">{course.title}</p>
+                  <p className="mt-2 text-xs font-semibold text-emerald-900">{course.period}</p>
+                  <p className="mt-1 text-sm text-stone-600">{course.institution}</p>
+                </div>
+              ))}
+            </div>
+          </article>
         </div>
       </div>
     </section>

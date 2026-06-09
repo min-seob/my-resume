@@ -17,6 +17,7 @@ export type Project = {
   title: string;
   period: string;
   client: string;
+  company: string;
   role: string;
   category: ProjectCategory;
   description: string;
@@ -28,7 +29,6 @@ export type Project = {
     label: string;
     items: string[];
   }[];
-  pendingItems: string[];
   links?: {
     label: string;
     href: string;
@@ -52,6 +52,17 @@ export type TimelineItem = {
 export type SkillGroup = {
   title: string;
   skills: string[];
+};
+
+export type Credential = {
+  label: string;
+  value: string;
+};
+
+export type TrainingCourse = {
+  title: string;
+  period: string;
+  institution: string;
 };
 
 export type ContactLink = {

@@ -14,6 +14,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex flex-wrap items-center gap-2">
         <Badge>{project.period}</Badge>
         <Badge tone="muted">{project.client}</Badge>
+        {project.company !== "-" ? <Badge tone="muted">{project.company}</Badge> : null}
         <Badge tone="muted">{project.category}</Badge>
       </div>
 

@@ -92,21 +92,25 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 </ul>
               </div>
 
-              {project.pendingItems.length > 0 ? (
-                <div className="mt-8 rounded-md border border-stone-200 bg-[#fbfaf7] p-5">
-                  <h2 className="text-base font-bold text-stone-950">보완 예정</h2>
-                  <ul className="mt-3 space-y-2 text-sm text-stone-600">
-                    {project.pendingItems.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
             </article>
 
             <aside className="rounded-lg border border-stone-200 bg-white p-6 shadow-sm">
               <h2 className="text-base font-bold text-stone-950">프로젝트 요약</h2>
               <dl className="mt-5 space-y-4 text-sm">
+                <div>
+                  <dt className="font-semibold text-stone-500">기간</dt>
+                  <dd className="mt-1 text-stone-900">{project.period}</dd>
+                </div>
+                <div>
+                  <dt className="font-semibold text-stone-500">고객사</dt>
+                  <dd className="mt-1 text-stone-900">{project.client}</dd>
+                </div>
+                {project.company !== "-" ? (
+                  <div>
+                    <dt className="font-semibold text-stone-500">근무회사</dt>
+                    <dd className="mt-1 text-stone-900">{project.company}</dd>
+                  </div>
+                ) : null}
                 <div>
                   <dt className="font-semibold text-stone-500">역할</dt>
                   <dd className="mt-1 text-stone-900">{project.role}</dd>
@@ -136,8 +140,8 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                 </div>
               </dl>
 
-              <div className="mt-6 border-t border-stone-100 pt-5">
-                {project.links && project.links.length > 0 ? (
+              {project.links && project.links.length > 0 ? (
+                <div className="mt-6 border-t border-stone-100 pt-5">
                   <div className="space-y-2">
                     {project.links.map((link) => (
                       <a
@@ -155,13 +159,8 @@ export default async function ProjectDetailPage({ params }: ProjectPageProps) {
                       </a>
                     ))}
                   </div>
-                ) : (
-                  <span className="inline-flex min-h-11 cursor-not-allowed items-center justify-center gap-2 rounded-md border border-stone-300 bg-white px-4 py-2 text-sm font-semibold text-stone-500 opacity-80">
-                    <ExternalLink aria-hidden className="h-4 w-4" />
-                    [링크 추가 예정]
-                  </span>
-                )}
-              </div>
+                </div>
+              ) : null}
             </aside>
           </div>
         </section>
