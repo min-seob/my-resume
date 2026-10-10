@@ -95,7 +95,7 @@ export default async function CareerDetailPage({ params }: CareerPageProps) {
                 <tbody>
                   {project.aiUsage.map((row) => (
                     <tr key={row.area} className="border-b border-line last:border-0 align-top leading-7">
-                      <th scope="row" className="w-[140px] px-5 py-4 text-left font-bold">
+                      <th scope="row" className="w-[200px] px-5 py-4 text-left font-bold">
                         {row.area}
                       </th>
                       <td className="px-5 py-4 text-body">{row.use}</td>
