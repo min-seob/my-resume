@@ -24,7 +24,8 @@ function Inventory({ project }: { project: Project }) {
   const env = project.detailTechStack.flatMap((g) => g.items).join(", ");
 
   return (
-    <table className="mb-4 w-full border-collapse text-[12.5px]">
+    <div className="mb-4 overflow-x-auto">
+    <table className="w-full min-w-[520px] border-collapse text-[12.5px]">
       <tbody>
         <tr>
           <th colSpan={4} className="border border-black bg-[#e7e7e7] px-2.5 py-2 text-left text-[13.5px] font-bold">
@@ -61,6 +62,7 @@ function Inventory({ project }: { project: Project }) {
         </tr>
       </tbody>
     </table>
+    </div>
   );
 }
 
@@ -103,29 +105,33 @@ export default function DocumentPage() {
         <div className="flex flex-col items-center gap-8">
           {/* 1쪽: 개인 이력 카드 */}
           <article className="doc-page w-full max-w-[794px] bg-white p-8 text-sm leading-relaxed text-black shadow-[0_2px_12px_rgba(14,17,22,0.18)] sm:min-h-[1123px] sm:px-16 sm:py-20">
-            <h1 className="text-center text-[28px] font-bold tracking-[0.4em]">개 인 이 력 카 드</h1>
+            <h1 className="text-center text-2xl font-bold tracking-[0.15em] sm:text-[28px] sm:tracking-[0.4em]">개 인 이 력 카 드</h1>
             <p className="pb-8 pt-1.5 text-center text-[13px] text-[#444]">{profile.tagline}</p>
 
             <h2 className="pb-1.5 text-[15px] font-bold">1. 신상기록</h2>
             <table className="mb-6 w-full border-collapse text-[13px]">
               <tbody>
                 <tr>
-                  <th className={`${th} w-[100px]`}>성명</th>
+                  <th className={`${th} w-[110px]`}>성명</th>
                   <td className={td}>{profile.name}</td>
-                  <th className={`${th} w-[100px]`}>기술등급</th>
+                </tr>
+                <tr>
+                  <th className={th}>기술등급</th>
                   <td className={td}>{grade?.value}</td>
                 </tr>
                 <tr>
                   <th className={th}>연락처</th>
                   <td className={td}>{profile.phone}</td>
+                </tr>
+                <tr>
                   <th className={th}>E-Mail</th>
-                  <td className={td}>{profile.email}</td>
+                  <td className={`${td} break-all`}>{profile.email}</td>
                 </tr>
               </tbody>
             </table>
 
             <div className="mb-6 flex flex-wrap gap-6">
-              <div className="min-w-0 flex-[1_1_300px]">
+              <div className="min-w-0 flex-[1_1_240px]">
                 <h2 className="pb-1.5 text-[15px] font-bold">2. 학력</h2>
                 <table className="w-full border-collapse text-[13px]">
                   <tbody>
@@ -138,7 +144,7 @@ export default function DocumentPage() {
                   </tbody>
                 </table>
               </div>
-              <div className="min-w-0 flex-[1_1_300px]">
+              <div className="min-w-0 flex-[1_1_240px]">
                 <h2 className="pb-1.5 text-[15px] font-bold">3. 자격증</h2>
                 <table className="w-full border-collapse text-[13px]">
                   <thead>
