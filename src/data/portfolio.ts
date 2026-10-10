@@ -43,18 +43,19 @@ export const featuredProjects: Project[] = [
     role: "SI 책임연구원",
     category: "충전 플랫폼",
     description:
-      "충전 플랫폼의 차량 모델·Anomaly 수신자 관리, 사업제휴·약관, E-pit 캐시, e-MSP 쿠폰 백오피스와 배치를 설계·개발합니다.",
-    techStack: ["Java 25", "Spring Boot 4", "PostgreSQL", "Flyway", "Kafka", "Redis"],
+      "충전 플랫폼의 CPOS 충전소·충전기·충전기 모델, 차량 모델·Anomaly 수신자 관리, 사업제휴·약관, E-pit 캐시, e-MSP 쿠폰 백오피스와 배치를 설계·개발합니다.",
+    techStack: ["Java 25", "Spring Boot 4", "PostgreSQL", "Flyway", "Kafka", "Redis", "Docker"],
     highlights: [
-      "기능별 API·배치 처리 흐름, 상태 전이, 트랜잭션·예외 정책 설계",
+      "CPOS 충전소·충전기·충전기 모델 및 백오피스 DB 설계, API·배치 처리 흐름과 상태 전이 설계",
       "약관 최신 게시 본문·개정 이력 조회 API 및 테스트 화면 개발",
       "예약 쿠폰 수정·수동 발행의 백오피스·배치 처리 상태와 발행 흐름 정비",
     ],
     detailIntro:
-      "충전 플랫폼 백오피스·배치 영역을 담당하며 기능별 API와 배치 처리 흐름, 데이터 매핑·조회 조건, 상태 전이, 트랜잭션·예외 정책을 설계하고 개발했습니다.",
+      "충전 플랫폼의 CPOS 충전소·충전기·충전기 모델과 백오피스·배치 영역을 담당하며 DB 설계, 기능별 API와 배치 처리 흐름, 데이터 매핑·조회 조건, 상태 전이, 트랜잭션·예외 정책을 설계하고 개발했습니다.",
     detailBullets: [
-      "담당 모듈: 차량 모델·Anomaly 수신자 관리, 사업제휴·App/Core 약관, E-pit 캐시, e-MSP 쿠폰 백오피스·배치",
-      "설계 범위: 기능별 API·배치 처리 흐름, 데이터 매핑·조회 조건, 상태 전이, 트랜잭션·예외 정책",
+      "담당 모듈: CPOS 충전소·충전기·충전기 모델, 차량 모델·Anomaly 수신자 관리, 사업제휴·App/Core 약관, E-pit 캐시, e-MSP 쿠폰 백오피스·배치",
+      "설계 범위: DB 테이블 설계·ERD 작성, 기능별 API·배치 처리 흐름, 데이터 매핑·조회 조건, 상태 전이, 트랜잭션·예외 정책",
+      "Docker Compose 기반 로컬 개발 환경(PostgreSQL, Redis, Kafka) 구성 및 활용",
       "브랜드웹 약관 최신 게시 본문·개정 이력 조회 API 및 테스트 화면 개발",
       "E-pit 캐시 구매자 목록 테넌트 검색 조건을 조회·엑셀 다운로드에 적용",
       "예약 쿠폰 수정 시 미발급 대상 교체, 발급 이력 보유 건 수정 제한",
@@ -63,6 +64,7 @@ export const featuredProjects: Project[] = [
     detailTechStack: [
       { label: "Backend", items: ["Java 25", "Spring Boot 4", "Spring Security", "JWT"] },
       { label: "Data/Messaging", items: ["PostgreSQL", "Flyway", "Kafka", "Redis"] },
+      { label: "Infra", items: ["Docker", "Docker Compose"] },
       { label: "AI", items: ["Claude", "Codex"] },
     ],
     aiUsage: [
