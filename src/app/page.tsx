@@ -36,7 +36,10 @@ export default function Home() {
         </Section>
 
         <section id="recent" className="border-b border-line py-14">
-          <h2 className="pb-5 text-2xl font-extrabold tracking-tight">최근 수행 프로젝트</h2>
+          <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1 pb-5">
+            <h2 className="text-2xl font-extrabold tracking-tight">최근 수행 프로젝트</h2>
+            <span className="text-sm font-medium text-muted">→ 클릭 시 상세</span>
+          </div>
           <ul className="border-t border-ink">
             {recentProjects.map((project) => (
               <li key={project.slug} className="border-b border-line">
