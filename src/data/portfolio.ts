@@ -1,38 +1,20 @@
-import {
-  BrainCircuit,
-  Building2,
-  DatabaseZap,
-  FileDown,
-  FileText,
-  Landmark,
-  Mail,
-  Newspaper,
-  Phone,
-  ShieldCheck,
-  Sparkles,
-} from "lucide-react";
-
 import type {
-  ContactLink,
   Credential,
   Project,
   ResumeLink,
   SkillGroup,
-  Strength,
-  TimelineItem,
   TrainingCourse,
 } from "@/types/portfolio";
 
 export const profile = {
   name: "김민섭",
-  headline: "금융·결제·AI 서비스 백엔드 개발자 김민섭",
+  title: "경력기술서",
+  tagline: "2014 ~ 현재 · 12년차 개발자",
   summary:
-    "Java/Spring 기반 금융·결제 시스템 개발 경험과 기업형 AI 서비스, React/Next.js 기반 개인 서비스 개발 경험을 함께 보유한 개발자입니다.",
-  positioning:
-    "백엔드 중심의 금융/결제 도메인 경험을 바탕으로, AI 서비스와 개인 프로덕트까지 직접 기획·개발·배포할 수 있는 개발자입니다.",
-  emailPlaceholder: "painseob11@naver.com",
-  secondaryEmailPlaceholder: "painseob12@gmail.com",
-  phoneNumber: "010-9639-2198",
+    "Java/Spring 기반으로 공공, 은행, 카드, PG 시스템을 개발·운영해 왔습니다. 현재는 충전 플랫폼의 백오피스·배치를 설계·개발하고 있으며, Claude·Codex를 업무 절차와 개발 보조에 활용합니다. 개인 서비스도 기획부터 배포까지 직접 진행했습니다.",
+  email: "painseob12@gmail.com",
+  phone: "010-9639-2198",
+  phoneHref: "tel:+821096392198",
 };
 
 export const resumeLinks: ResumeLink[] = [
@@ -52,28 +34,46 @@ export const resumeLinks: ResumeLink[] = [
   },
 ];
 
-export const strengths: Strength[] = [
-  {
-    title: "금융·결제 백엔드",
-    description:
-      "카드사, 은행, PG, 간편결제, 인증, 정산, 배치, 전문 연계 흐름을 이해하고 구현합니다.",
-    icon: Landmark,
-  },
-  {
-    title: "Java/Spring 기반 구현력",
-    description:
-      "Spring Boot, JPA, QueryDSL, MyBatis, Batch, REST API를 활용해 운영 가능한 서버 구조를 만듭니다.",
-    icon: DatabaseZap,
-  },
-  {
-    title: "AI 서비스 확장성",
-    description:
-      "기업형 AI UI, LLM API, RAG, SSE Streaming, Agent UI 연계를 고려한 서비스 개발 경험을 쌓고 있습니다.",
-    icon: BrainCircuit,
-  },
-];
-
 export const featuredProjects: Project[] = [
+  {
+    title: "백오피스·배치 백엔드 개발",
+    period: "2026.06 ~ 현재",
+    client: "코브원",
+    company: "코브원",
+    role: "SI 책임연구원",
+    category: "충전 플랫폼",
+    description:
+      "충전 플랫폼의 차량 모델·Anomaly 수신자 관리, 사업제휴·약관, E-pit 캐시, e-MSP 쿠폰 백오피스와 배치를 설계·개발합니다.",
+    techStack: ["Java 25", "Spring Boot 4", "PostgreSQL", "Flyway", "Kafka", "Redis"],
+    highlights: [
+      "기능별 API·배치 처리 흐름, 상태 전이, 트랜잭션·예외 정책 설계",
+      "약관 최신 게시 본문·개정 이력 조회 API 및 테스트 화면 개발",
+      "예약 쿠폰 수정·수동 발행의 백오피스·배치 처리 상태와 발행 흐름 정비",
+    ],
+    detailIntro:
+      "충전 플랫폼 백오피스·배치 영역을 담당하며 기능별 API와 배치 처리 흐름, 데이터 매핑·조회 조건, 상태 전이, 트랜잭션·예외 정책을 설계하고 개발했습니다.",
+    detailBullets: [
+      "담당 모듈: 차량 모델·Anomaly 수신자 관리, 사업제휴·App/Core 약관, E-pit 캐시, e-MSP 쿠폰 백오피스·배치",
+      "설계 범위: 기능별 API·배치 처리 흐름, 데이터 매핑·조회 조건, 상태 전이, 트랜잭션·예외 정책",
+      "브랜드웹 약관 최신 게시 본문·개정 이력 조회 API 및 테스트 화면 개발",
+      "E-pit 캐시 구매자 목록 테넌트 검색 조건을 조회·엑셀 다운로드에 적용",
+      "예약 쿠폰 수정 시 미발급 대상 교체, 발급 이력 보유 건 수정 제한",
+      "쿠폰 수동 발행 백오피스·배치 간 처리 상태 및 발행 흐름 정비",
+    ],
+    detailTechStack: [
+      { label: "Backend", items: ["Java 25", "Spring Boot 4", "Spring Security", "JWT"] },
+      { label: "Data/Messaging", items: ["PostgreSQL", "Flyway", "Kafka", "Redis"] },
+      { label: "AI", items: ["Claude", "Codex"] },
+    ],
+    aiUsage: [
+      { area: "맞춤형 스킬", use: "반복·불편한 업무 절차를 스킬로 정리하고 재사용. CoEv ERD 동기화 스킬 등", effect: "매번 절차를 다시 설명하지 않고 일관된 흐름으로 수행" },
+      { area: "코딩 컨벤션", use: "팀 개발 가이드와 저장소별 AGENTS.md를 작업 지침으로 연결", effect: "패키지 구조, API 기준, 수정 범위와 검증 규칙 준수" },
+      { area: "팀 정보 공유", use: "CoEv DB 구조를 ERD 사이트로 구성해 워크스페이스 팀원과 공유", effect: "팀 내 데이터 구조 확인과 소통 지원" },
+      { area: "워크플로우 자동화", use: "DB 메타데이터 추출부터 ERD 생성, 기존 사이트 반영·배포까지의 절차 정리", effect: "반복 작업의 표준화와 누락 방지" },
+      { area: "개발 보조", use: "요구사항 정리, 기존 코드·스키마 탐색, 구현 초안 및 변경 사항 검토", effect: "코드 작성과 검토 과정의 효율화" },
+    ],
+    slug: "kobwon-charging-platform",
+  },
   {
     title: "다날 상품권 결제승인 업무 개발",
     period: "2026.03 ~ 2026.06",
@@ -105,52 +105,6 @@ export const featuredProjects: Project[] = [
       { label: "Integration", items: ["SSE"] },
     ],
     slug: "danal-payment-framework-migration",
-  },
-  {
-    title: "AI 타로 리딩 플랫폼 / AI 주식 뉴스 정보 서비스",
-    period: "2026.01 ~ 현재",
-    client: "Side Project",
-    company: "-",
-    role: "기획/설계/개발",
-    category: "개인 서비스",
-    description:
-      "AI 타로 리딩 플랫폼과 AI 주식 뉴스 서비스를 직접 기획·설계·개발·배포하며 LLM API와 Git-Vercel 자동화 흐름을 검증한 개인 서비스입니다.",
-    techStack: ["React", "TypeScript", "Next.js", "Firebase", "LLM API", "Vercel", "Google Cloud Scheduler", "HTTP/Socket"],
-    highlights: [
-      "LLM API 연동형 서비스 구조 설계부터 Git-Vercel 배포 자동화 흐름까지 수행",
-      "RSS 뉴스 수집·가공·서비스 및 채팅 서비스 개발",
-      "디스코드·인스타·스레드 자동 업로드 전송 시스템 개발",
-    ],
-    detailIntro:
-      "AI 타로 리딩 플랫폼과 AI 주식 뉴스 정보 서비스를 직접 기획·설계·개발·배포하며, LLM API 연동과 Git-Vercel 배포 자동화 기반 개인 서비스 운영 경험을 쌓았습니다.",
-    detailBullets: [
-      "AI 타로 리딩 플랫폼에서 하네스 엔지니어링 및 LLM 응답 품질 개선 수행",
-      "Claude Code, Codex, Gemini 등을 활용한 바이브코딩 기반 개발 경험 축적",
-      "LLM API 연동형 구조 설계와 서비스 기획, 설계, Git-Vercel 간 개발 배포 자동화 흐름 구성",
-      "AI 주식 뉴스 정보 서비스에서 RSS 뉴스 수집, 가공, 서비스 흐름 개발",
-      "채팅 서비스 개발",
-      "디스코드, 인스타, 스레드 자동 업로드 전송 시스템 개발",
-      "Dart Open API 연계",
-      "MCP와 Skill을 활용한 개발 자동화 실험",
-    ],
-    detailTechStack: [
-      { label: "Frontend", items: ["React", "TypeScript", "Next.js"] },
-      { label: "Backend/Data", items: ["Firebase", "RSS", "Dart Open API"] },
-      { label: "AI/Automation", items: ["LLM API", "Claude Code", "GPT Codex", "Gemini", "MCP", "Skill"] },
-      { label: "Infra", items: ["Vercel", "Google Cloud Scheduler", "Git", "HTTP/Socket"] },
-    ],
-    links: [
-      {
-        label: "AI 타로 에즈아르카나",
-        href: "https://asarcana.com/",
-        note: "개발중",
-      },
-      {
-        label: "AI 주식 뉴스",
-        href: "https://stockmate-mu.vercel.app/brief",
-      },
-    ],
-    slug: "ai-tarot-stock-news",
   },
   {
     title: "특화 UI (NotebookLM) / 기업형 AI",
@@ -645,30 +599,7 @@ export const featuredProjects: Project[] = [
     ],
     slug: "fire-disaster-integrated-safety-system-phase-1",
   },
-];
 
-export const timeline: TimelineItem[] = [
-  {
-    period: "2014 ~ 2017",
-    title: "공공/재난안전 시스템 개발",
-    description: "공공 서비스와 재난안전 관련 시스템 개발 경험을 축적했습니다.",
-  },
-  {
-    period: "2017 ~ 2021",
-    title: "도로공사·지방세·세입세출 시스템 개발/운영",
-    description: "행정/공공 도메인의 운영 안정성과 업무 흐름 이해도를 넓혔습니다.",
-  },
-  {
-    period: "2021 ~ 2024",
-    title: "NH포탈, KB GSPAY, 우리은행 IB 시스템 등 금융권 개발",
-    description: "은행, 카드, 결제 서비스 중심의 금융권 백엔드 개발 경험을 쌓았습니다.",
-  },
-  {
-    period: "2024.03 ~ 2026.06",
-    title: "NH Pay, 현대카드, 삼성카드, 현대모비스 AI, 다날 PG/결제 개발",
-    description:
-      "간편결제, 카드 연동, PG/결제, 기업형 AI 서비스까지 영역을 확장하고 있습니다.",
-  },
 ];
 
 export const skillGroups: SkillGroup[] = [
@@ -698,7 +629,6 @@ export const credentials: Credential[] = [
   { label: "기술등급", value: "정보처리기사 고급" },
   { label: "자격증", value: "정보처리기사 (2015.10)" },
   { label: "학력", value: "계명대학교 컴퓨터공학과 졸업" },
-  { label: "출근가능", value: "2026.02.02" },
 ];
 
 export const trainingCourses: TrainingCourse[] = [
@@ -722,39 +652,4 @@ export const trainingCourses: TrainingCourse[] = [
     period: "2016.08",
     institution: "LX공간정보아카데미",
   },
-];
-
-export const contactLinks: ContactLink[] = [
-  {
-    label: "Email",
-    placeholder: profile.emailPlaceholder,
-    href: `mailto:${profile.emailPlaceholder}`,
-    icon: Mail,
-  },
-  {
-    label: "Email 2",
-    placeholder: profile.secondaryEmailPlaceholder,
-    href: `mailto:${profile.secondaryEmailPlaceholder}`,
-    icon: Mail,
-  },
-  {
-    label: "Mobile",
-    placeholder: profile.phoneNumber,
-    href: "tel:+821096392198",
-    icon: Phone,
-  },
-];
-
-export const resumeNotes = [
-  "PDF는 새 창에서 열고, DOCX는 다운로드 링크로 연결합니다.",
-  "공개용 파일은 개인정보 노출 여부를 별도 확인합니다.",
-];
-
-export const domainSignals = [
-  { label: "Finance", icon: Building2 },
-  { label: "Payment", icon: ShieldCheck },
-  { label: "Asarcana", icon: Sparkles },
-  { label: "Stock News", icon: Newspaper },
-  { label: "Resume", icon: FileText },
-  { label: "Download", icon: FileDown },
 ];

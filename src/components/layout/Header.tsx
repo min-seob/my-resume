@@ -1,30 +1,30 @@
 import Link from "next/link";
 
 const navItems = [
-  { label: "소개", href: "/#summary" },
-  { label: "프로젝트", href: "/#projects" },
-  { label: "경력", href: "/#career" },
-  { label: "기술", href: "/#skills" },
-  { label: "이력서", href: "/#resume" },
+  { label: "경력 상세", href: "/#recent" },
+  { label: "개인 프로젝트", href: "/projects" },
+  { label: "문서 원본", href: "/document" },
 ];
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-stone-950/95 backdrop-blur">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-        <Link href="/" className="text-sm font-bold text-white sm:text-base">
-          김민섭
+    <header className="border-b border-line bg-white">
+      <div className="mx-auto flex min-h-[68px] max-w-[960px] flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-2">
+        <Link href="/" className="text-[17px] font-extrabold tracking-tight text-ink">
+          김민섭 <span className="font-medium text-muted">경력기술서</span>
         </Link>
-        <nav className="hidden items-center gap-6 md:flex">
+        <nav className="flex flex-wrap items-center gap-x-7 gap-y-1 text-[15px] font-medium text-muted">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-stone-300 transition hover:text-emerald-200"
-            >
+            <Link key={item.href} href={item.href} className="transition hover:text-accent">
               {item.label}
             </Link>
           ))}
+          <Link
+            href="/#contact"
+            className="rounded-full bg-ink px-[18px] py-2.5 font-bold text-white transition hover:bg-accent"
+          >
+            연락처
+          </Link>
         </nav>
       </div>
     </header>

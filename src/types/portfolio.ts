@@ -1,5 +1,3 @@
-import type { LucideIcon } from "lucide-react";
-
 export type ButtonVariant = "primary" | "secondary" | "ghost";
 
 export type ResumeLink = {
@@ -11,7 +9,7 @@ export type ResumeLink = {
   variant: ButtonVariant;
 };
 
-export type ProjectCategory = "금융·결제" | "기업형 AI" | "개인 서비스" | "금융·공공" | "공공·재난안전" | "교육·공공";
+export type ProjectCategory = "금융·결제" | "기업형 AI" | "개인 서비스" | "금융·공공" | "공공·재난안전" | "교육·공공" | "충전 플랫폼";
 
 export type Project = {
   title: string;
@@ -34,19 +32,12 @@ export type Project = {
     href: string;
     note?: string;
   }[];
+  aiUsage?: {
+    area: string;
+    use: string;
+    effect: string;
+  }[];
   slug: string;
-};
-
-export type Strength = {
-  title: string;
-  description: string;
-  icon: LucideIcon;
-};
-
-export type TimelineItem = {
-  period: string;
-  title: string;
-  description: string;
 };
 
 export type SkillGroup = {
@@ -65,9 +56,3 @@ export type TrainingCourse = {
   institution: string;
 };
 
-export type ContactLink = {
-  label: string;
-  placeholder: string;
-  href?: string;
-  icon: LucideIcon;
-};

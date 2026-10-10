@@ -4,9 +4,9 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "김민섭 | 금융·결제·AI 서비스 백엔드 개발자",
+  title: "경력기술서 | 김민섭",
   description:
-    "Java/Spring 기반 금융·결제 시스템과 AI 서비스 개발 경험을 보유한 김민섭 개발자 포트폴리오입니다.",
+    "2014년부터 공공, 은행, 카드, PG, 충전 플랫폼 시스템을 개발해 온 12년차 개발자 김민섭의 경력기술서입니다.",
 };
 
 export default function RootLayout({
