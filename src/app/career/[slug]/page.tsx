@@ -82,7 +82,7 @@ export default async function CareerDetailPage({ params }: CareerPageProps) {
 
         {project.aiUsage ? (
           <section className="border-b border-line py-12">
-            <h2 className="pb-5 text-[15px] font-bold">Claude·Codex 활용 및 업무 자동화</h2>
+            <h2 className="pb-5 text-[15px] font-bold">AI 에이전트 기반 개발 생산성 향상 및 업무 자동화</h2>
             <div className="overflow-x-auto rounded-2xl border border-line">
               <table className="w-full min-w-[640px] border-collapse text-sm">
                 <thead>
