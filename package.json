@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "test:miniroom": "node --test tests/miniroom-engine.test.mjs",
+    "assets:miniroom": "node scripts/prepare-miniroom-assets.mjs"
   },
   "dependencies": {
     "lucide-react": "1.17.0",

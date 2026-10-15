@@ -1,0 +1,449 @@
+.minihome .mini-minimi__stage {
+  min-height: 178px;
+  padding-block: 10px;
+}
+
+.minihome .mini-minimi__sprite {
+  width: 96px;
+  height: 160px;
+  image-rendering: pixelated;
+}
+
+.minihome .miniroom-card {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--mini-line);
+  border-radius: var(--mini-radius-card);
+  background: var(--mini-card);
+  color: var(--mini-ink);
+  scroll-margin-top: 128px;
+}
+
+.minihome .miniroom-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.minihome .miniroom-small-label {
+  color: var(--mini-sky-dark);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.minihome .miniroom-heading h2 {
+  margin: 4px 0 0;
+  font-family: var(--mini-display);
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+.minihome .miniroom-room-count {
+  flex-shrink: 0;
+  padding: 7px 10px;
+  border: 1px dotted var(--mini-line);
+  border-radius: var(--mini-radius-pill);
+  color: var(--mini-ink-soft);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.minihome .miniroom-room-count span {
+  padding-inline: 5px;
+  color: var(--mini-sky-dark);
+}
+
+.minihome .miniroom-instructions {
+  margin: 10px 0 14px;
+  color: var(--mini-ink-soft);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.minihome .miniroom-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 10px;
+  background: var(--mini-ink);
+  cursor: crosshair;
+  isolation: isolate;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.minihome .miniroom-visual {
+  position: absolute;
+  inset: 0;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity 250ms var(--mini-ease-out);
+}
+
+.minihome .miniroom-stage[data-phase="switching"] .miniroom-visual {
+  opacity: 0;
+}
+
+.minihome .miniroom-background,
+.minihome .miniroom-foreground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.minihome .miniroom-background {
+  z-index: 0;
+}
+
+.minihome .miniroom-door-patch {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 600ms var(--mini-ease-out);
+}
+
+.minihome .miniroom-door-patch.is-open {
+  opacity: 1;
+}
+
+.minihome .miniroom-avatar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 6.25%;
+  height: 15.625%;
+  background-image: url("/minihome/minimi-hoodie-actions-atlas.png");
+  background-repeat: no-repeat;
+  background-size: 1400% 100%;
+  background-position: 0 0;
+  transform: translate(-50%, -96.25%);
+  image-rendering: pixelated;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.minihome .miniroom-stage[data-ready="false"] .miniroom-avatar {
+  visibility: hidden;
+}
+
+.minihome .miniroom-target {
+  position: absolute;
+  z-index: 2;
+  width: 18px;
+  height: 10px;
+  border: 2px solid var(--mini-card);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--mini-sky-dark);
+  transform: translate(-50%, -50%);
+}
+
+.minihome .miniroom-door {
+  position: absolute;
+  z-index: 2000;
+  display: block;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--mini-card);
+  cursor: pointer;
+}
+
+.minihome .miniroom-door:hover:not(:disabled) {
+  background: color-mix(in oklch, var(--mini-sky) 12%, transparent);
+  border-color: color-mix(in oklch, var(--mini-card) 45%, transparent);
+}
+
+.minihome .miniroom-door-label {
+  position: absolute;
+  top: -7px;
+  left: 50%;
+  padding: 5px 8px;
+  border: 1px solid color-mix(in oklch, var(--mini-card) 35%, transparent);
+  border-radius: 4px;
+  background: color-mix(in oklch, var(--mini-ink) 86%, transparent);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  transform: translate(-50%, -100%);
+}
+
+.minihome .miniroom-door:disabled {
+  cursor: default;
+}
+
+.minihome .miniroom-display-patch {
+  position: absolute;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 150ms var(--mini-ease-out);
+}
+
+.minihome .miniroom-display-patch.is-landscape {
+  opacity: 1;
+}
+
+.minihome .miniroom-furniture {
+  position: absolute;
+  z-index: 2100;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.minihome .miniroom-display-control {
+  z-index: 2200;
+}
+
+.minihome .miniroom-furniture:hover:not(:disabled) {
+  border-color: color-mix(in oklch, var(--mini-card) 55%, transparent);
+  background: color-mix(in oklch, var(--mini-sky) 10%, transparent);
+}
+
+.minihome .miniroom-furniture:disabled {
+  cursor: default;
+}
+
+.minihome .miniroom-furniture-label {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  padding: 5px 8px;
+  border: 1px solid color-mix(in oklch, var(--mini-card) 35%, transparent);
+  border-radius: 4px;
+  background: color-mix(in oklch, var(--mini-ink) 88%, transparent);
+  color: var(--mini-card);
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -100%);
+  pointer-events: none;
+}
+
+.minihome .miniroom-furniture:hover:not(:disabled) .miniroom-furniture-label,
+.minihome .miniroom-furniture:focus-visible .miniroom-furniture-label {
+  opacity: 1;
+}
+
+.minihome .miniroom-furniture-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.minihome .miniroom-furniture-controls button {
+  min-height: 36px;
+  padding: 7px 10px;
+  border: 1px solid var(--mini-line);
+  border-radius: 6px;
+  background: var(--mini-card);
+  color: var(--mini-ink-soft);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.minihome .miniroom-furniture-controls button:hover:not(:disabled),
+.minihome .miniroom-furniture-controls button[aria-pressed="true"] {
+  border-color: var(--mini-sky-dark);
+  background: var(--mini-sky-wash);
+  color: var(--mini-sky-dark);
+}
+
+.minihome .miniroom-furniture-controls button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.minihome .miniroom-loading {
+  position: absolute;
+  z-index: 3000;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  background: color-mix(in oklch, var(--mini-ink) 85%, transparent);
+  color: var(--mini-card);
+  font-size: 13px;
+}
+
+.minihome .miniroom-loading button {
+  padding: 8px 14px;
+  border: 1px solid var(--mini-card);
+  border-radius: 6px;
+  color: var(--mini-card);
+  cursor: pointer;
+}
+
+.minihome .miniroom-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.minihome .miniroom-status {
+  display: flex;
+  min-height: 32px;
+  align-items: center;
+  gap: 7px;
+  color: var(--mini-ink-soft);
+  font-size: 11px;
+}
+
+.minihome .miniroom-status-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--mini-sky-dark);
+}
+
+.minihome .miniroom-travel {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border: 1px solid var(--mini-line);
+  border-radius: 6px;
+  background: var(--mini-sky-wash);
+  color: var(--mini-sky-dark);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.minihome .miniroom-travel:hover:not(:disabled) {
+  border-color: var(--mini-sky-dark);
+  background: var(--mini-paper-blue);
+}
+
+.minihome .miniroom-travel:disabled,
+.minihome .miniroom-controls button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.minihome .miniroom-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  padding-top: 12px;
+  margin-top: 12px;
+  border-top: 1px dotted var(--mini-line);
+}
+
+.minihome .miniroom-controls > span {
+  flex: 1 1 180px;
+  color: var(--mini-ink-soft);
+  font-size: 10px;
+}
+
+.minihome .miniroom-controls button {
+  width: 34px;
+  min-height: 34px;
+  border: 1px solid var(--mini-line);
+  border-radius: 5px;
+  background: var(--mini-card);
+  color: var(--mini-sky-dark);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.minihome .miniroom-controls button:hover:not(:disabled) {
+  background: var(--mini-sky-wash);
+}
+
+.minihome .miniroom-stage:focus-visible,
+.minihome .miniroom-card button:focus-visible {
+  outline: 3px solid var(--mini-sky-dark);
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .minihome .miniroom-card {
+    padding: 16px 10px;
+    scroll-margin-top: 152px;
+  }
+
+  .minihome .miniroom-heading {
+    padding-inline: 4px;
+  }
+
+  .minihome .miniroom-heading h2 {
+    font-size: 22px;
+  }
+
+  .minihome .miniroom-room-count {
+    padding: 6px 7px;
+    font-size: 10px;
+  }
+
+  .minihome .miniroom-instructions {
+    padding-inline: 4px;
+    font-size: 11px;
+  }
+
+  .minihome .miniroom-travel {
+    width: 100%;
+    min-height: 44px;
+  }
+
+  .minihome .miniroom-door-label {
+    padding: 3px 5px;
+    font-size: 9px;
+  }
+
+  .minihome .miniroom-controls button {
+    width: 44px;
+    min-height: 44px;
+  }
+
+  .minihome .miniroom-controls > span {
+    flex-basis: 100%;
+    padding-bottom: 4px;
+  }
+
+  .minihome .miniroom-furniture-controls button {
+    min-height: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minihome .miniroom-visual,
+  .minihome .miniroom-door-patch {
+    transition-duration: 100ms;
+  }
+}
+
+.minihome .miniroom-stairs-travel { margin-top: 10px; }
+
+.minihome .miniroom-cats { position: absolute; inset: 0; pointer-events: none; }
+.minihome .miniroom-cats[hidden] { display: none; }
+.minihome .miniroom-cat { position: absolute; width: 7.8%; aspect-ratio: 1; transform: translate(-50%, -85.4167%); pointer-events: none; }
+.minihome .miniroom-cat-sprite { width: 100%; height: 100%; background: url("/minihome/cats-atlas.png") no-repeat; background-size: 600% 200%; image-rendering: pixelated; }
+.minihome .miniroom-cat-name { position: absolute; left: 50%; top: 100%; transform: translateX(-50%); padding: 2px 5px; border-radius: 4px; background: #fff8e2d9; color: #5e4734; font-size: 10px; white-space: nowrap; }

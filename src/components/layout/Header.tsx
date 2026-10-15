@@ -13,7 +13,7 @@ export function Header() {
         <Link href="/" className="text-[17px] font-extrabold tracking-tight text-ink">
           김민섭 <span className="font-medium text-muted">경력기술서</span>
         </Link>
-        <nav className="flex flex-wrap items-center gap-x-7 gap-y-1 text-[15px] font-medium text-muted">
+        <nav aria-label="주요 메뉴" className="flex flex-wrap items-center gap-x-7 gap-y-1 text-[15px] font-medium text-muted">
           {navItems.map((item) => (
             <Link key={item.href} href={item.href} className="transition hover:text-accent">
               {item.label}
@@ -24,6 +24,12 @@ export function Header() {
             className="rounded-full bg-ink px-[18px] py-2.5 font-bold text-white transition hover:bg-accent"
           >
             연락처
+          </Link>
+          <Link
+            href="/minihome"
+            className="rounded-full border border-line bg-accent-soft px-[18px] py-2.5 font-bold text-accent transition hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+          >
+            미니홈
           </Link>
         </nav>
       </div>

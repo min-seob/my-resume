@@ -1,0 +1,8 @@
+Edit this approved pixel-art isometric bedroom. Preserve the same 1536x1024 camera, room footprint, warm colors, large window, reading armchair and side table on the left, and CLOSED wooden door on the right in precisely the same position.
+Replace the existing narrow bed with a visibly WIDE KING-SIZE bed for two adults: broad wooden or upholstered headboard, two full pillow sets, a wide pale cream quilt with soft sage accents. Keep it in the back-center/left zone and ensure the footprint leaves the central/right corridor to the door walkable.
+Make the bedroom more furnished but not cluttered:
+- add a substantial warm-wood WARDROBE along the back-right wall between the bed area and the door, leaving clearance beside the door;
+- add a compact DRESSER/VANITY with a mirror and a small tray/perfume items beside the wardrobe (against the wall, not in the center);
+- a cushioned BENCH at the foot of the king bed;
+- a tasteful low soft rug in the central/lower floor, with plenty of visible open walking floor around it.
+Retain the existing bookshelf, reading armchair, plants, bedside lamp and window view, moving the bedside table a little only if required by the wider bed. Keep the room coherent in isometric perspective, crisp detailed raster pixel art, not smooth vector. No people or avatar baked in, no labels, no UI, no extra door, no text. The doorway and furniture should remain legible for point-and-click interactions.
