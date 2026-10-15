@@ -2,7 +2,7 @@ import sharp from 'sharp';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const input = path.join(root, 'doc/project-memory/assets/10-15/mimi-kkomi-sprites-v1.png');
+const input = path.join(root, 'docs/worklog/2610/assets/mimi-kkomi-sprites-v2.png');
 const {data, info} = await sharp(input).ensureAlpha().raw().toBuffer({resolveWithObject:true});
 // Pixel sprites use binary coverage so generated semi-transparent edge colors
 // cannot bleed between atlas frames when the browser samples the texture.

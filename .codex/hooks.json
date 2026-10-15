@@ -1,0 +1,31 @@
+{
+  "description": "AGENTS.md의 작업 로그 완료 기준을 요청 시작과 종료 시 확인합니다.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/.codex/workflow.mjs\"",
+            "commandWindows": "powershell.exe -NoProfile -NonInteractive -Command \"& node (Join-Path (git rev-parse --show-toplevel) '.codex/workflow.mjs')\"",
+            "timeout": 30,
+            "statusMessage": "작업 로그 기준 불러오기"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"$(git rev-parse --show-toplevel)/.codex/workflow.mjs\"",
+            "commandWindows": "powershell.exe -NoProfile -NonInteractive -Command \"& node (Join-Path (git rev-parse --show-toplevel) '.codex/workflow.mjs')\"",
+            "timeout": 30,
+            "statusMessage": "작업 로그 여부 확인"
+          }
+        ]
+      }
+    ]
+  }
+}

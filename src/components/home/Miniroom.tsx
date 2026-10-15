@@ -11,7 +11,7 @@ import { MINIROOM_ASSETS, ROOM_SCENES, movementOrigin, foregroundDepth } from ".
 import type { RoomId, SeatId } from "./miniroom-scenes";
 
 type Phase = "idle" | "walking" | "approaching" | "opening" | "leaving" | "switching" | "arriving"
-  | "seat-approach" | "sitting-down" | "sitting" | "standing-up";
+  | "seat-approach" | "sitting-down" | "sitting" | "lying-down" | "lying" | "standing-up";
 type PoseTransition = { from: Point; to: Point; startedAt: number; duration: number; progress: number };
 type Simulation = {
   roomId: RoomId;
@@ -36,7 +36,7 @@ const INITIAL_UI: RoomUI = { roomId: "coding", phase: "idle", doorOpen: false, t
 const WALK_SPEED = 205;
 
 
-const BUSY_PHASES: Phase[] = ["opening", "leaving", "switching", "arriving", "sitting-down", "standing-up"];
+const BUSY_PHASES: Phase[] = ["opening", "leaving", "switching", "arriving", "sitting-down", "lying-down", "standing-up"];
 
 function positionStyle(point: Point): CSSProperties {
   return { left: `${point.x / 1536 * 100}%`, top: `${point.y / 1024 * 100}%` };
@@ -46,8 +46,12 @@ function rectangleStyle(rectangle: { x: number; y: number; width: number; height
   return { ...positionStyle(rectangle), width: `${rectangle.width / 1536 * 100}%`, height: `${rectangle.height / 1024 * 100}%` };
 }
 
-function spriteTransform(point: Point, mirrored: boolean, anchor: Point = { x: 48, y: 154 }): string {
-  return `translate3d(${(point.x - anchor.x) / 96 * 100}%, ${(point.y - anchor.y) / 160 * 100}%, 0) scaleX(${mirrored ? -1 : 1})`;
+function spriteTransform(point: Point, mirrored: boolean, anchor: Point = { x: 48, y: 154 }, size = { width: 96, height: 160 }): string {
+  return `translate3d(${(point.x - anchor.x) / size.width * 100}%, ${(point.y - anchor.y) / size.height * 100}%, 0) scaleX(${mirrored ? -1 : 1})`;
+}
+
+function seatActionLabel(seat: { posture?: "lying" }): string {
+  return seat.posture === "lying" ? "눕기" : "앉기";
 }
 
 export function Miniroom() {
@@ -83,18 +87,27 @@ export function Miniroom() {
     const sim = simulationRef.current;
     const seat = ROOM_SCENES[sim.roomId].seats.find((item) => item.id === sim.seatId);
     const progress = sim.transition?.progress ?? 1;
-    const seated = seat && (sim.phase === "sitting"
-      || (sim.phase === "sitting-down" && progress >= 0.5)
+    const atRestingPlace = Boolean(seat) && (sim.phase === "sitting" || sim.phase === "lying"
+      || ((sim.phase === "sitting-down" || sim.phase === "lying-down") && progress >= 0.5)
       || (sim.phase === "standing-up" && progress < 0.5));
+    const lyingSprite = atRestingPlace && seat?.posture === "lying" ? seat?.lyingSprite : undefined;
+    const lying = Boolean(lyingSprite);
+    const spriteSize = lyingSprite ?? { width: 96, height: 160 };
     // Floor points use a foot anchor; seat points use a hip anchor. Never glide
     // between those different coordinate meanings across furniture.
     sprite.style.opacity = sim.transition ? String(Math.abs(progress * 2 - 1)) : "1";
     const walking = sim.path.length > 0 && !sim.transition && !reduceMotionRef.current;
-    const frame = seated ? seat.frame : walking ? 4 + Math.floor(sim.walkElapsed / 105) % 6 : sim.idleFrame;
-    sprite.style.backgroundPosition = `${frame / 13 * 100}% 0`;
-    sprite.style.transform = spriteTransform(sim.position, seated ? false : sim.mirrored, seated ? seat.anchor : undefined);
-    sprite.style.zIndex = String(seated ? seat.depth : Math.round(sim.position.y));
-    sprite.dataset.frame = String(frame);
+    const frame = atRestingPlace && seat && !lying ? seat.frame : walking ? 4 + Math.floor(sim.walkElapsed / 105) % 6 : sim.idleFrame;
+    sprite.style.width = `${spriteSize.width / 1536 * 100}%`;
+    sprite.style.height = `${spriteSize.height / 1024 * 100}%`;
+    sprite.style.backgroundImage = lyingSprite
+      ? `url("${lyingSprite.src}")` : 'url("/minihome/minimi-hoodie-actions-atlas.png")';
+    sprite.style.backgroundSize = lying ? "100% 100%" : "1400% 100%";
+    sprite.style.backgroundPosition = lying ? "50% 50%" : `${frame / 13 * 100}% 0`;
+    sprite.style.transform = spriteTransform(sim.position, lying ? true : atRestingPlace ? false : sim.mirrored,
+      atRestingPlace && seat ? seat.anchor : undefined, spriteSize);
+    sprite.style.zIndex = String(atRestingPlace && seat ? seat.depth : Math.round(sim.position.y));
+    sprite.dataset.frame = lying ? "lying" : String(frame);
     sprite.dataset.seat = sim.seatId ?? "";
     sprite.dataset.position = `${Math.round(sim.position.x)},${Math.round(sim.position.y)}`;
     for (const item of ROOM_SCENES[sim.roomId].foregrounds) {
@@ -139,8 +152,9 @@ export function Miniroom() {
       sim.position = {...(t < 0.5 ? transition.from : transition.to)};
       if (t >= 1) {
         sim.transition = null;
-        if (sim.phase === "sitting-down") {
-          sim.phase = "sitting";
+        if (sim.phase === "sitting-down" || sim.phase === "lying-down") {
+          const seat = ROOM_SCENES[sim.roomId].seats.find((item) => item.id === sim.seatId);
+          sim.phase = seat?.posture === "lying" ? "lying" : "sitting";
           sim.target = null;
         } else {
           sim.seatId = null;
@@ -175,7 +189,7 @@ export function Miniroom() {
           if (seat) {
             sim.seatId = seat.id;
             sim.pendingSeatId = null;
-            sim.phase = "sitting-down";
+            sim.phase = seat.posture === "lying" ? "lying-down" : "sitting-down";
             sim.transition = { from: { ...sim.position }, to: { ...seat.position }, startedAt: time, progress: 0,
               duration: reduceMotionRef.current ? 100 : 240 };
           } else {
@@ -299,8 +313,10 @@ export function Miniroom() {
     const sim = simulationRef.current;
     const seat = ROOM_SCENES[sim.roomId].seats.find((item) => item.id === id);
     if (!seat) return;
-    if (sim.seatId === id && sim.phase === "sitting") {
-      setFeedback(`${seat.label}에 앉아 있어요. 바닥을 누르면 일어나요.`);
+    if (sim.seatId === id && (sim.phase === "sitting" || sim.phase === "lying")) {
+      setFeedback(seat.posture === "lying"
+        ? `${seat.label}에 누워 있어요. 바닥을 누르면 일어나요.`
+        : `${seat.label}에 앉아 있어요. 바닥을 누르면 일어나요.`);
       return;
     }
     moveTo(seat.approach, false, seat.id);
@@ -359,8 +375,10 @@ export function Miniroom() {
     idle: "천천히 둘러보세요", walking: "걷는 중", approaching: usingStairs ? "계단 앞으로 가는 중" : "문 앞으로 가는 중",
     opening: usingStairs ? "계단으로 이동하는 중" : "문 여는 중", leaving: `${destinationDirection} 이동 중`,
     switching: "다음 방으로 이동 중", arriving: `${scene.name}에 들어오는 중`,
-    "seat-approach": "앉을 자리로 가는 중", "sitting-down": "자리에 앉는 중",
+    "seat-approach": "가구로 가는 중", "sitting-down": "자리에 앉는 중",
     sitting: `${occupiedSeat?.label ?? "자리"}에 앉아 있어요 · 바닥을 누르면 일어나요`,
+    "lying-down": "침대에 눕는 중",
+    lying: `${occupiedSeat?.label ?? "자리"}에 누워 있어요 · 바닥을 누르면 일어나요`,
     "standing-up": "자리에서 일어나는 중",
   };
 
@@ -373,7 +391,7 @@ export function Miniroom() {
         </div>
         <span className="miniroom-room-count">코딩방 ↔ 침실 ↔ 복층</span>
       </div>
-      <p id="miniroom-instructions" className="miniroom-instructions">바닥은 걷기, 소파·의자는 앉기, 스탠바이미는 화면 돌리기. 문은 다른 방으로, 침실 계단은 고양이 복층으로 이어져요.</p>
+      <p id="miniroom-instructions" className="miniroom-instructions">바닥은 걷기, 소파·의자는 앉기, 침실 침대는 눕기, 스탠바이미는 화면 돌리기. 문은 다른 방으로, 침실 계단은 고양이 복층으로 이어져요.</p>
 
       <div ref={stageRef} className="miniroom-stage" role="group" tabIndex={0}
         aria-label={`${scene.name}의 움직이는 미니룸`} aria-describedby="miniroom-instructions"
@@ -402,10 +420,10 @@ export function Miniroom() {
             alt="" width={1536} height={1024} unoptimized draggable={false} style={{ zIndex: scene.display.depth }} /> : null}
         </div>
         {scene.seats.map((seat) => <button type="button" key={seat.id} className="miniroom-furniture"
-          aria-label={`${seat.label}에 앉기`} aria-pressed={ui.seatId === seat.id} data-seat-id={seat.id}
+          aria-label={`${seat.label}에 ${seatActionLabel(seat)}`} aria-pressed={ui.seatId === seat.id} data-seat-id={seat.id}
           style={rectangleStyle(seat.hitbox)} disabled={!ready || busy}
           onPointerDown={(event) => event.stopPropagation()} onClick={() => activateSeat(seat.id)}>
-          <span className="miniroom-furniture-label">{seat.label} · 앉기</span>
+          <span className="miniroom-furniture-label">{seat.label} · {seatActionLabel(seat)}</span>
         </button>)}
         {scene.display ? <button type="button" className="miniroom-furniture miniroom-display-control"
           aria-label="스탠바이미 화면 회전" aria-pressed={landscape}
@@ -443,10 +461,10 @@ export function Miniroom() {
       </div>
       {scene.stairs ? <button type="button" className="miniroom-travel miniroom-stairs-travel" disabled={!ready || busy}
         onClick={activateStairs}>계단 올라가 미미·꼬미 복층 가기 ↑</button> : null}
-      {scene.id === "loft" ? <p className="miniroom-instructions">미미와 꼬미는 캣타워·숨숨집·화장실·쿠션을 오가며 쉬고, 밥과 물도 먹어요. 화장실·자동급식기·식수기는 각각 두 개씩 있어요.</p> : null}
+      {scene.id === "loft" ? <p className="miniroom-instructions">미미는 캣타워 위에서 자고, 꼬미는 쿠션에서 배를 보이며 자기도 해요. 두 고양이는 숨숨집·화장실·쿠션을 오가고, 밥과 물도 먹어요. 화장실·자동급식기·식수기는 각각 두 개씩 있어요.</p> : null}
       <div className="miniroom-furniture-controls" aria-label="가구 상호작용 버튼">
         {scene.seats.map((seat) => <button type="button" key={seat.id} disabled={!ready || busy}
-          aria-pressed={ui.seatId === seat.id} onClick={() => activateSeat(seat.id)}>{seat.label} 앉기</button>)}
+          aria-pressed={ui.seatId === seat.id} onClick={() => activateSeat(seat.id)}>{seat.label} {seatActionLabel(seat)}</button>)}
         {scene.display ? <button type="button" disabled={!ready || busy} aria-pressed={landscape}
           aria-label="스탠바이미 화면 회전 버튼"
           aria-describedby="miniroom-display-description"

@@ -7,10 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "worklog": "node docs/worklog/page/serve.mjs",
     "test:miniroom": "node --test tests/miniroom-engine.test.mjs",
     "assets:miniroom": "node scripts/prepare-miniroom-assets.mjs"
   },
   "dependencies": {
+    "@supabase/supabase-js": "2.118.0",
     "lucide-react": "1.17.0",
     "next": "16.2.7",
     "react": "19.2.7",

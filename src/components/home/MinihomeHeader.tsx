@@ -3,16 +3,30 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const navItems = [
-  { label: "내소개", anchor: "about" },
-  { label: "한마디", anchor: "feeling" },
-  { label: "다이어리", anchor: "diary" },
-  { label: "방명록", anchor: "guestbook" },
-  { label: "미니미", anchor: "minimi" },
-  { label: "미니룸", anchor: "miniroom" },
+type MinihomeNavPage = "minimi" | "miniroom";
+
+type MinihomeNavItem = {
+  label: string;
+  href: string;
+  homeAnchor?: string;
+  activePage?: MinihomeNavPage;
+};
+
+const navItems: MinihomeNavItem[] = [
+  { label: "내소개", href: "#about", homeAnchor: "about" },
+  { label: "개발 블로그", href: "#blog", homeAnchor: "blog" },
+  { label: "방명록", href: "#guestbook", homeAnchor: "guestbook" },
+  { label: "미니미", href: "/minihome/minimi", activePage: "minimi" },
+  { label: "미니룸", href: "/minihome/miniroom", activePage: "miniroom" },
 ];
 
-export function MinihomeHeader({ activePortfolio = false }: { activePortfolio?: boolean }) {
+export function MinihomeHeader({
+  activePortfolio = false,
+  activeMiniPage,
+}: {
+  activePortfolio?: boolean;
+  activeMiniPage?: "minimi" | "miniroom";
+}) {
   const pathname = usePathname();
   const isMinihome = pathname === "/minihome";
 
@@ -32,15 +46,23 @@ export function MinihomeHeader({ activePortfolio = false }: { activePortfolio?: 
 
         <nav className="mini-nav" aria-label="미니홈 메뉴">
           <Link href="/minihome" className="mini-nav__home">HOME</Link>
-          {navItems.map((item) => (
-            <Link
-              key={item.anchor}
-              href={isMinihome ? `#${item.anchor}` : `/minihome#${item.anchor}`}
-              className="mini-nav__item"
-            >
-              {item.label}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const href = item.homeAnchor
+              ? isMinihome ? `#${item.homeAnchor}` : `/minihome#${item.homeAnchor}`
+              : item.href;
+            const isCurrentPage = item.activePage === activeMiniPage;
+
+            return (
+              <Link
+                key={item.label}
+                href={href}
+                className={`mini-nav__item${isCurrentPage ? " mini-nav__item--active" : ""}`}
+                aria-current={isCurrentPage ? "page" : undefined}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
           <Link
             href="/minihome/portfolio"
             className={`mini-nav__item${activePortfolio ? " mini-nav__item--active" : ""}`}

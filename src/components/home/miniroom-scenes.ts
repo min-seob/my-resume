@@ -1,7 +1,7 @@
 import type { Point, Polygon, RoomGeometry } from "./miniroom-engine";
 
 export type RoomId = "coding" | "rest" | "loft";
-export type SeatId = "sofa" | "coding-chair" | "gaming-chair" | "reading-chair" | "bed-bench";
+export type SeatId = "sofa" | "coding-chair" | "gaming-chair" | "reading-chair" | "bed-bench" | "bed";
 type Rectangle = { x: number; y: number; width: number; height: number };
 export type Seat = {
   id: SeatId;
@@ -13,6 +13,8 @@ export type Seat = {
   depth: number;
   hitbox: Rectangle;
   hideForegrounds: readonly string[];
+  posture?: "lying";
+  lyingSprite?: { src: string; width: number; height: number };
 };
 export type Foreground = { src: string; depth: number; frontEdge?: readonly Point[] };
 export type RoomScene = RoomGeometry & {
@@ -97,6 +99,10 @@ export const ROOM_SCENES: Record<RoomId, RoomScene> = {
     background: "/minihome/rest-v4-room.webp",
     initialPosition: { x: 1080, y: 720 },
     seats: [
+      { id: "bed", label: "침대", approach: { x: 676, y: 574 }, position: { x: 695, y: 340 }, anchor: { x: 80, y: 70 },
+        frame: 0, depth: 554, hitbox: { x: 409, y: 203, width: 495, height: 350 }, posture: "lying",
+        lyingSprite: { src: "/minihome/minimi-bed-lying.png", width: 160, height: 140 },
+        hideForegrounds: ["/minihome/rest-v4-bed-foreground.webp"] },
       { id: "reading-chair", label: "침실 의자", approach: { x: 1000, y: 815 }, position: { x: 810, y: 720 }, anchor: { x: 48, y: 124 },
         frame: 13, depth: 810, hitbox: { x: 700, y: 605, width: 195, height: 200 },
         hideForegrounds: ["/minihome/rest-v4-chair-foreground.webp"] },
@@ -153,7 +159,9 @@ export const MINIROOM_ASSETS = [...new Set([
   "/minihome/minimi-hoodie-actions-atlas.png",
   "/minihome/cats-atlas.png",
   "/minihome/cats-actions-atlas.png",
+  "/minihome/kkomi-belly-up.png",
   ...Object.values(ROOM_SCENES).flatMap((scene) => [scene.background, scene.door.patch.src,
+    ...scene.seats.flatMap((seat) => seat.lyingSprite ? [seat.lyingSprite.src] : []),
     ...scene.foregrounds.map((item) => item.src),
     ...(scene.display ? [scene.display.landscapePatch.src, scene.display.landscapeForeground] : []),
   ]),

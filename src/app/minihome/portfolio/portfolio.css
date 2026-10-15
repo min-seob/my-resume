@@ -1,10 +1,3 @@
-.minihome .mini-nav__item--active,
-.minihome .mini-nav__item[aria-current="page"] {
-  border-bottom-color: var(--mini-sky-dark);
-  background: var(--mini-sky-wash);
-  color: var(--mini-ink);
-}
-
 .portfolio-page {
   padding-top: 34px;
 }
@@ -141,6 +134,38 @@
 .portfolio-screen-preview__image--contain {
   object-fit: contain;
   background: var(--mini-paper);
+}
+
+.portfolio-screen-preview--paired {
+  overflow: hidden;
+  background: var(--mini-sky-wash);
+}
+
+.portfolio-screen-preview__pair {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(8px, 1.2vw, 16px);
+  padding: 8px;
+  background: var(--mini-sky-wash);
+}
+
+.portfolio-screen-preview__pair-device {
+  position: relative;
+  height: 100%;
+  max-width: calc((100% - 16px) / 2);
+  overflow: hidden;
+  aspect-ratio: 390 / 844;
+  border: 1px solid color-mix(in oklch, var(--mini-line) 78%, var(--mini-ink));
+  border-radius: 10px;
+  background: var(--mini-paper);
+  box-shadow: 0 6px 15px color-mix(in oklch, var(--mini-ink) 16%, transparent);
+}
+
+.portfolio-screen-preview__pair-image {
+  object-fit: cover;
 }
 
 .portfolio-screen-preview--cover {

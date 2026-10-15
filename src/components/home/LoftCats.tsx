@@ -6,13 +6,14 @@ import type { Point, RoomGeometry } from "./miniroom-engine";
 import { ROOM_SCENES } from "./miniroom-scenes";
 
 type Activity = "perching" | "hiding" | "toilet" | "cushion" | "eating" | "drinking";
+type CatName = "미미" | "꼬미";
 type Phase = "resting" | "walking" | "entering" | "activity" | "exiting";
 type Station = { id: string; activity: Activity; approach: Point; position: Point; duration: number };
 type Cat = {
-  name: string; position: Point; path: Point[]; phase: Phase; until: number;
+  name: CatName; position: Point; path: Point[]; phase: Phase; until: number;
   mirrored: boolean; walkTime: number; blocked: number; station: Station | null;
   transition: { from: Point; to: Point; progress: number; duration: number; remaining: Point[] } | null;
-  nextActivity: number;
+  nextActivity: number; cushionVisits: number;
 };
 const SEPARATION = 120;
 const STOPS: Point[] = [{x: 470, y: 630}, {x: 720, y: 600}, {x: 890, y: 650}, {x: 750, y: 790}, {x: 590, y: 730}, {x: 920, y: 720}];
@@ -28,7 +29,10 @@ const STATIONS: Station[] = [
   {id:"water-left", activity:"drinking", approach:{x:1100,y:640}, position:{x:1110,y:530}, duration:5500},
   {id:"water-right", activity:"drinking", approach:{x:1260,y:630}, position:{x:1200,y:558}, duration:5500},
 ];
-const ACTIVITIES: Activity[] = ["cushion", "eating", "perching", "drinking", "hiding", "toilet"];
+const ACTIVITY_CYCLES: Record<CatName, Activity[]> = {
+  "미미": ["perching", "cushion", "perching", "eating", "perching", "drinking", "hiding", "toilet"],
+  "꼬미": ["cushion", "eating", "cushion", "perching", "cushion", "drinking", "hiding", "toilet"],
+};
 const LABELS: Record<Activity, string> = {perching:"캣타워 위",hiding:"숨숨집 안",toilet:"화장실 안",cushion:"쿠션에서 쉬기",eating:"밥 먹는 중",drinking:"물 마시는 중"};
 
 // The other cat is a temporary obstacle, so rerouting also respects furniture.
@@ -46,8 +50,8 @@ function pathAroundCat(from: Point, to: Point, other: Cat): Point[] {
 export function LoftCats({ active }: { active: boolean }) {
   const elements = useRef<(HTMLDivElement | null)[]>([]);
   const cats = useRef<Cat[]>([
-    {name:"미미",position:{x:660,y:620},path:[],phase:"resting",until:0,mirrored:false,walkTime:0,blocked:0,station:null,transition:null,nextActivity:0},
-    {name:"꼬미",position:{x:830,y:690},path:[],phase:"resting",until:0,mirrored:true,walkTime:0,blocked:0,station:null,transition:null,nextActivity:1},
+    {name:"미미",position:{x:660,y:620},path:[],phase:"resting",until:0,mirrored:false,walkTime:0,blocked:0,station:null,transition:null,nextActivity:0,cushionVisits:0},
+    {name:"꼬미",position:{x:830,y:690},path:[],phase:"resting",until:0,mirrored:true,walkTime:0,blocked:0,station:null,transition:null,nextActivity:1,cushionVisits:0},
   ]);
 
   useEffect(() => {
@@ -58,18 +62,24 @@ export function LoftCats({ active }: { active: boolean }) {
     cats.current.forEach((cat,i) => { if (!cat.until) cat.until = now + (i ? 5500 : 2000); });
 
     function plan(cat: Cat, other: Cat, time: number) {
-      const activity = ACTIVITIES[cat.nextActivity % ACTIVITIES.length];
+      const cycle = ACTIVITY_CYCLES[cat.name];
+      const activity = cycle[cat.nextActivity % cycle.length];
       const options = STATIONS.filter(station => station.activity === activity
         && station.id !== other.station?.id
         && distance(station.position, other.position) > SEPARATION + 20
         && distance(station.approach, other.position) > SEPARATION + 20
         && (!other.station || (distance(station.position,other.station.position) > SEPARATION + 20
           && distance(station.approach,other.station.approach) > SEPARATION + 20)));
+      if (cat.name==="꼬미" && activity==="cushion") {
+        const preferredCushion = cat.cushionVisits % 2 === 0 ? "cushion-cream" : "cushion-green";
+        options.sort((a,b)=>Number(b.id===preferredCushion)-Number(a.id===preferredCushion));
+      }
       for (const station of options) {
         const path = pathAroundCat(cat.position,station.approach,other);
         if (!path.length) continue;
         cat.station = station; cat.path = path; cat.phase = "walking";
         cat.walkTime = 0; cat.blocked = 0; cat.nextActivity++;
+        if (station.activity === "cushion") cat.cushionVisits++;
         return;
       }
       // Take a free floor spot while waiting for a resource or blocked passage.
@@ -154,7 +164,12 @@ export function LoftCats({ active }: { active: boolean }) {
                     return;
                   }
                   cat.transition=null;
-                  if (cat.phase==="entering") {cat.phase="activity";cat.until=time+(cat.station?.duration??5000);cat.mirrored=false;}
+                  if (cat.phase==="entering") {
+                    const preferredTowerNap = cat.name==="미미" && cat.station?.activity==="perching";
+                    const preferredCushionNap = cat.name==="꼬미" && cat.station?.activity==="cushion";
+                    const duration = preferredTowerNap ? 30000 : preferredCushionNap ? 18000 : cat.station?.duration ?? 5000;
+                    cat.phase="activity";cat.until=time+duration;cat.mirrored=false;
+                  }
                   else {cat.station=null;cat.phase="resting";cat.until=time+2200;}
                 }
               } else {
@@ -179,7 +194,12 @@ export function LoftCats({ active }: { active: boolean }) {
         const inPlace=cat.phase==="activity";
         const consuming=inPlace && (activity==="eating" || activity==="drinking");
         const onCushion=inPlace && activity==="cushion";
-        const sleeping=onCushion && cat.until-time<8000;
+        const cushionSleepDuration=cat.name==="꼬미"?12000:8000;
+        const sleeping=inPlace && (
+          (onCushion && cat.until-time<cushionSleepDuration)
+          || (cat.name==="미미" && activity==="perching" && cat.until-time<24000)
+        );
+        const bellyUpSleeping=sleeping && cat.name==="꼬미" && cat.station?.id==="cushion-cream";
         const inHouse=inPlace && (activity==="hiding" || activity==="toilet");
         const moving = !motion.matches && !document.hidden && cat.blocked===0
           && (cat.phase==="walking" || cat.phase==="entering" || cat.phase==="exiting");
@@ -191,12 +211,14 @@ export function LoftCats({ active }: { active: boolean }) {
         element.style.zIndex=String(cat.station && cat.phase!=="walking" ? 700 : Math.round(cat.position.y));
         element.dataset.phase=cat.phase;
         element.dataset.activity=activity??"";
-        const label=cat.phase==="walking"?(cat.blocked || motion.matches ?"길 양보 중":"산책 중"):inPlace&&activity?(sleeping?"쿠션에서 잠자는 중":LABELS[activity]):cat.phase==="entering"?"자리로 들어가는 중":cat.phase==="exiting"?"나오는 중":"쉬는 중";
+        const label=cat.phase==="walking"?(cat.blocked || motion.matches ?"길 양보 중":"산책 중"):inPlace&&activity?(sleeping?(bellyUpSleeping?"쿠션에서 배를 보이고 잠자는 중":activity==="perching"?"캣타워 위에서 잠자는 중":"쿠션에서 잠자는 중"):LABELS[activity]):cat.phase==="entering"?"자리로 들어가는 중":cat.phase==="exiting"?"나오는 중":"쉬는 중";
         element.setAttribute("aria-label",`${cat.name}, ${label}`);
         if (sprite) {
-          sprite.style.backgroundImage=consuming || onCushion&&!sleeping ? 'url("/minihome/cats-actions-atlas.png")' : 'url("/minihome/cats-atlas.png")';
-          sprite.style.backgroundSize=consuming || onCushion&&!sleeping ? "300% 200%" : "600% 200%";
-          sprite.style.backgroundPosition=`${consuming?Math.floor(time/300)%2*50:onCushion&&!sleeping?100:column/5*100}% ${i*100}%`;
+          sprite.style.backgroundImage=bellyUpSleeping ? 'url("/minihome/kkomi-belly-up.png")'
+            : consuming || onCushion&&!sleeping ? 'url("/minihome/cats-actions-atlas.png")' : 'url("/minihome/cats-atlas.png")';
+          sprite.style.backgroundSize=bellyUpSleeping ? "100% 100%" : consuming || onCushion&&!sleeping ? "300% 200%" : "600% 200%";
+          sprite.style.backgroundPosition=bellyUpSleeping ? "50% 50%"
+            : `${consuming?Math.floor(time/300)%2*50:onCushion&&!sleeping?100:column/5*100}% ${i*100}%`;
           sprite.style.transform=`scaleX(${cat.mirrored?-1:1})`;
           sprite.style.opacity=inHouse?"0":"1";
           // Step into the opening, rather than leaving a cat floating over its shell.

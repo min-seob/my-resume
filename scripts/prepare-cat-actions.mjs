@@ -22,8 +22,8 @@ async function prepareSheet(source,columns,output) {
   }));
   await sharp({create:{width:columns*96,height:192,channels:4,background:'#00000000'}}).composite(layers).png().toFile(path.join(root,output));
 }
-await prepareSheet('doc/project-memory/assets/10-15/mimi-kkomi-actions-v1.png',3,'public/minihome/cats-actions-atlas.png');
-const stairs=await sharp(path.join(root,'doc/project-memory/assets/10-15/bedroom-stairs-v3.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
+await prepareSheet('docs/worklog/2610/assets/mimi-kkomi-actions-v2.png',3,'public/minihome/cats-actions-atlas.png');
+const stairs=await sharp(path.join(root,'docs/worklog/2610/assets/bedroom-stairs-v3.png')).ensureAlpha().raw().toBuffer({resolveWithObject:true});
 for(let k=0;k<stairs.data.length;k+=4){if(stairs.data[k+3]<=200)stairs.data.fill(0,k,k+4);else stairs.data[k+3]=255;}
 await sharp(stairs.data,{raw:stairs.info}).trim().resize(520,620,{fit:'contain',kernel:'nearest',background:'#00000000'}).png().toFile(path.join(root,'public/minihome/bedroom-stairs-v3.png'));
 console.log('Prepared cat action frames and oak staircase.');

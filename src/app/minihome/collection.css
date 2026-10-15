@@ -1,0 +1,473 @@
+.minihome .mini-collection-page {
+  padding-top: 30px;
+}
+
+.minihome .mini-collection-content {
+  width: min(1080px, 100%);
+  margin-inline: auto;
+}
+
+.minihome .mini-collection-back {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 7px;
+  color: var(--mini-ink-soft);
+  font-size: 12px;
+  font-weight: 700;
+  transition: color var(--mini-duration) var(--mini-ease-out);
+}
+
+.minihome .mini-collection-back:hover {
+  color: var(--mini-sky-dark);
+}
+
+.minihome .mini-collection-intro {
+  padding: 24px 0 25px;
+}
+
+.minihome .mini-collection-eyebrow {
+  margin: 0;
+  color: var(--mini-sky-dark);
+  font-family: var(--mini-mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.minihome .mini-collection-intro h1 {
+  margin: 7px 0 0;
+  color: var(--mini-ink);
+  font-family: var(--mini-display);
+  font-size: clamp(30px, 4vw, 42px);
+  font-weight: 900;
+  letter-spacing: -0.055em;
+  line-height: 1.15;
+}
+
+.minihome .mini-collection-intro > p:last-child {
+  margin: 9px 0 0;
+  color: var(--mini-ink-soft);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.minihome .miniroom-page-intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.minihome .mini-minimi-library {
+  width: min(280px, 100%);
+  padding: 6px;
+  border: 1px solid var(--mini-line);
+  border-radius: var(--mini-radius-card);
+  background: var(--mini-card);
+  box-shadow: 2px 3px 0 color-mix(in oklch, var(--mini-sky) 18%, transparent);
+}
+
+.minihome .mini-minimi-card {
+  overflow: hidden;
+  border: 2px solid var(--mini-sky-dark);
+  border-radius: 12px;
+  background: var(--mini-sky-wash);
+  box-shadow: 0 0 0 4px color-mix(in oklch, var(--mini-sky) 15%, transparent);
+}
+
+.minihome .mini-minimi-card__stage {
+  display: grid;
+  height: 320px;
+  grid-template-rows: minmax(0, 1fr) auto;
+  justify-items: center;
+  align-items: end;
+  overflow: hidden;
+  padding: 10px 8px;
+  background:
+    radial-gradient(circle at 18px 18px, color-mix(in oklch, var(--mini-sky) 30%, transparent) 1px, transparent 1.2px),
+    linear-gradient(145deg, var(--mini-sky-wash), var(--mini-paper-blue));
+  background-size: 18px 18px, auto;
+}
+
+.minihome .mini-minimi-card__lineup {
+  display: flex;
+  width: 100%;
+  min-height: 0;
+  align-items: end;
+  justify-content: center;
+  gap: 0;
+}
+
+.minihome .mini-minimi-card__cat {
+  width: 60px;
+  height: 60px;
+  flex: 0 0 auto;
+  background-image: url("/minihome/cats-atlas.png");
+  background-repeat: no-repeat;
+  background-size: 600% 200%;
+  image-rendering: pixelated;
+}
+
+.minihome .mini-minimi-card__cat--mimi {
+  background-position: 0 0;
+}
+
+.minihome .mini-minimi-card__cat--kkomi {
+  background-position: 0 100%;
+}
+
+.minihome .mini-minimi-card__character {
+  width: 120px;
+  height: auto;
+  max-height: 200px;
+  align-self: end;
+  image-rendering: pixelated;
+}
+
+.minihome .mini-minimi-card__name {
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--mini-line);
+  border-radius: 8px;
+  background: var(--mini-card);
+  box-shadow: 0 2px 0 color-mix(in oklch, var(--mini-sky) 18%, transparent);
+}
+
+.minihome .mini-minimi-card__name h2 {
+  margin: 0;
+  color: var(--mini-ink);
+  font-family: var(--mini-display);
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}
+
+.minihome .miniroom-library {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.88fr);
+  align-items: stretch;
+  gap: 16px;
+}
+
+.minihome .miniroom-room-picker {
+  min-width: 0;
+}
+
+.minihome .miniroom-room-tabs {
+  display: flex;
+  min-width: 0;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 10px;
+}
+
+.minihome .miniroom-room-tab {
+  display: inline-flex;
+  min-height: 33px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 13px;
+  border: 1px solid var(--mini-line);
+  border-radius: var(--mini-radius-pill);
+  background: var(--mini-card);
+  color: var(--mini-ink-soft);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition:
+    border-color var(--mini-duration) var(--mini-ease-out),
+    background-color var(--mini-duration) var(--mini-ease-out),
+    color var(--mini-duration) var(--mini-ease-out);
+}
+
+.minihome .miniroom-room-tab:hover {
+  border-color: var(--mini-sky-dark);
+  color: var(--mini-sky-dark);
+}
+
+.minihome .miniroom-room-tab.is-selected {
+  border-color: var(--mini-sky-dark);
+  background: var(--mini-sky-dark);
+  color: var(--mini-card);
+}
+
+.minihome .miniroom-room-stage {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--mini-line);
+  border-radius: 12px;
+  background: var(--mini-ink);
+}
+
+.minihome .miniroom-room-stage img {
+  object-fit: contain;
+}
+
+.minihome .miniroom-room-stage::after {
+  position: absolute;
+  inset: 55% 0 0;
+  background: linear-gradient(180deg, transparent, color-mix(in oklch, var(--mini-ink) 68%, transparent));
+  content: "";
+  pointer-events: none;
+}
+
+.minihome .miniroom-room-stage figcaption {
+  position: absolute;
+  z-index: 1;
+  bottom: 13px;
+  left: 15px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  text-shadow: 0 1px 5px color-mix(in oklch, var(--mini-ink) 65%, transparent);
+}
+
+.minihome .miniroom-detail {
+  display: flex;
+  min-width: 0;
+  height: 450px;
+  min-height: 450px;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--mini-line);
+  border-radius: var(--mini-radius-card);
+  background: var(--mini-card);
+  box-shadow: 2px 3px 0 color-mix(in oklch, var(--mini-sky) 18%, transparent);
+}
+
+.minihome .miniroom-detail__heading {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.minihome .miniroom-detail__heading p {
+  margin: 0;
+  color: var(--mini-sky-dark);
+  font-family: var(--mini-mono);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.minihome .miniroom-detail__heading h2 {
+  margin: 5px 0 0;
+  color: var(--mini-ink);
+  font-family: var(--mini-display);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.045em;
+}
+
+.minihome .miniroom-detail__count {
+  flex: 0 0 auto;
+  padding: 6px 9px;
+  border: 1px solid var(--mini-line);
+  border-radius: var(--mini-radius-pill);
+  color: var(--mini-ink-soft);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.minihome .miniroom-detail__caption {
+  margin: 11px 0 0;
+  color: var(--mini-ink-soft);
+  font-size: 11px;
+}
+
+.minihome .miniroom-object-list {
+  display: grid;
+  min-height: 0;
+  flex: 1 1 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-content: start;
+  gap: 8px;
+  margin: 12px -3px 0 0;
+  padding: 1px 4px 1px 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  list-style: none;
+  scrollbar-color: var(--mini-sky) transparent;
+  scrollbar-width: thin;
+}
+
+.minihome .miniroom-object {
+  display: flex;
+  min-width: 0;
+  min-height: 58px;
+  align-items: center;
+  gap: 6px;
+  padding: 5px;
+  border: 1px solid var(--mini-line);
+  border-radius: 8px;
+  background: color-mix(in oklch, var(--mini-sky-wash) 45%, var(--mini-card));
+}
+
+.minihome .miniroom-object__preview {
+  position: relative;
+  display: block;
+  width: 45px;
+  height: 30px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 7px;
+  background: var(--mini-paper-blue);
+}
+
+.minihome .miniroom-object__preview img {
+  position: absolute;
+  max-width: none;
+  object-fit: fill;
+}
+
+.minihome .miniroom-object__text {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+}
+
+.minihome .miniroom-object__text strong {
+  overflow-wrap: anywhere;
+  color: var(--mini-ink);
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.minihome .miniroom-object__text small {
+  color: var(--mini-ink-soft);
+  font-size: 8px;
+  line-height: 1.35;
+}
+
+.minihome .mini-collection-back:focus-visible,
+.minihome .mini-page button:focus-visible {
+  outline: 3px solid var(--mini-sky-dark);
+  outline-offset: 3px;
+}
+
+@media (max-width: 880px) {
+  .minihome .miniroom-library {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .minihome .miniroom-room-stage {
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+}
+
+@media (max-width: 740px) {
+  .minihome .mini-collection-page {
+    padding: 22px 16px 42px;
+  }
+
+  .minihome .mini-collection-intro {
+    padding: 20px 0 18px;
+  }
+
+  .minihome .mini-minimi-library {
+    padding: 6px;
+  }
+
+  .minihome .miniroom-library {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 15px;
+  }
+
+  .minihome .miniroom-room-tabs {
+    flex-wrap: nowrap;
+    gap: 6px;
+    padding-bottom: 4px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-color: var(--mini-sky) transparent;
+    scrollbar-width: thin;
+  }
+
+  .minihome .miniroom-room-tab {
+    flex: 0 0 auto;
+    padding-inline: 11px;
+  }
+
+  .minihome .miniroom-detail {
+    height: 440px;
+    min-height: 440px;
+  }
+
+  .minihome .miniroom-object-list {
+    max-height: 340px;
+  }
+}
+
+@media (max-width: 520px) {
+  .minihome .mini-minimi-library {
+    padding: 6px;
+  }
+
+  .minihome .mini-minimi-card__stage {
+    height: min(300px, calc(100vw - 20px));
+    padding: 8px;
+  }
+
+  .minihome .mini-minimi-card__cat {
+    width: min(54px, 17vw);
+    height: min(54px, 17vw);
+  }
+
+  .minihome .mini-minimi-card__character {
+    width: min(110px, 38vw);
+    max-height: 180px;
+  }
+
+  .minihome .mini-minimi-card__name {
+    margin-top: 7px;
+    padding: 5px 11px;
+  }
+
+  .minihome .miniroom-detail {
+    height: 430px;
+    min-height: 430px;
+    padding: 13px;
+  }
+
+  .minihome .miniroom-object-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    max-height: 335px;
+  }
+
+  .minihome .miniroom-object {
+    min-height: 52px;
+    gap: 6px;
+    padding: 5px;
+  }
+
+  .minihome .miniroom-object__preview {
+    width: 48px;
+    height: 32px;
+  }
+
+  .minihome .miniroom-object__text strong {
+    font-size: 10px;
+  }
+
+  .minihome .miniroom-object__text small {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .minihome .mini-collection-back,
+  .minihome .miniroom-room-tab {
+    transition: none;
+  }
+}

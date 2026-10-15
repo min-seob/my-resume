@@ -2,7 +2,7 @@ import sharp from 'sharp';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
-const source=path.join(root,'doc/project-memory/assets/10-15/rest-room-v4-closed.png');
+const source=path.join(root,'docs/worklog/2610/assets/rest-room-v4-closed.png');
 const output=path.join(root,'public/minihome');
 await sharp(source).resize(1536,1024,{kernel:'nearest'}).webp({quality:96}).toFile(path.join(output,'rest-v4-room.webp'));
 const foregrounds=[

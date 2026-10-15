@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>작업 로그</title>
+<style>
+:root{--bg:#f7f6f3;--panel:#fff;--ink:#1f2328;--sub:#6b7280;--line:#e5e2db;--accent:#b4532a;--chip:#f0ece4;--code:#f3f1ec}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--panel:#1e1d1b;--ink:#ece9e2;--sub:#9a968c;--line:#33312d;--accent:#e08a5c;--chip:#2a2825;--code:#252320}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 -apple-system,"Segoe UI","Malgun Gothic",sans-serif}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:14px 20px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+h1{font-size:18px;margin:0;margin-right:auto}
+h1 small{color:var(--sub);font-weight:400;font-size:13px;margin-left:8px}
+input,button,select{font:inherit;color:inherit;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 10px}
+input{width:min(280px,100%)}
+button{cursor:pointer}button:hover{border-color:var(--accent)}
+main{max-width:860px;margin:0 auto;padding:20px 16px 80px}
+.month{margin:28px 0 8px;font-size:13px;letter-spacing:.06em;color:var(--sub);font-weight:600}
+.day{background:var(--panel);border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+.day>summary{list-style:none;cursor:pointer;padding:12px 16px;display:flex;gap:10px;align-items:center}
+.day>summary::-webkit-details-marker{display:none}
+.day>summary::before{content:"▸";color:var(--sub);transition:transform .15s}
+.day[open]>summary::before{transform:rotate(90deg)}
+.date{font-weight:600}
+.wd{color:var(--sub);font-size:13px}
+.chip{margin-left:auto;background:var(--chip);border-radius:999px;padding:1px 10px;font-size:12px;color:var(--sub)}
+.new{color:var(--accent);font-size:12px;font-weight:600}
+.body{padding:2px 20px 16px;border-top:1px solid var(--line)}
+.entry{margin:10px 0;border-top:1px solid var(--line)}
+.entry>summary{list-style:none;cursor:pointer;padding:10px 0 6px;font-size:16px;font-weight:600;color:var(--accent);display:flex;gap:8px;align-items:baseline}
+.entry>summary::-webkit-details-marker{display:none}
+.entry>summary::before{content:"▸";color:var(--sub);font-size:12px;transition:transform .15s}
+.entry[open]>summary::before{transform:rotate(90deg)}
+.entry>summary code{font-size:13px}
+.entryBody{padding-bottom:6px}
+.body h1,.body h2,.body h3{line-height:1.35;margin:1.3em 0 .4em}
+.body h1{font-size:17px}.body h2{font-size:16px;color:var(--accent)}.body h3{font-size:15px}
+.body p,.body ul,.body ol{margin:.4em 0}
+.body li{margin:.15em 0}
+.body code{background:var(--code);padding:1px 5px;border-radius:5px;font:13px ui-monospace,Consolas,monospace}
+.body pre{background:var(--code);padding:12px;border-radius:8px;overflow:auto}
+.body pre code{padding:0;background:none}
+.body a{color:var(--accent)}
+.body img{display:block;max-width:100%;max-height:680px;height:auto;margin:8px 0;border:1px solid var(--line);border-radius:8px}
+.body table{border-collapse:collapse;margin:.6em 0;font-size:14px}
+.body td,.body th{border:1px solid var(--line);padding:4px 10px}
+mark{background:#ffe08a;color:#000;border-radius:3px}
+.empty{color:var(--sub);text-align:center;padding:60px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1>작업 로그<small id="meta"></small></h1>
+  <input id="q" type="search" placeholder="전체 검색 (내용·날짜)">
+  <select id="month"></select>
+  <button id="toggle">모두 펼치기</button>
+  <button id="reload">새로고침</button>
+</header>
+<main id="list"></main>
+<script>
+const $ = (id) => document.getElementById(id);
+const WD = ["일","월","화","수","목","금","토"];
+let days = [];      // {path, date, month, text}
+let allOpen = false;
+
+const esc = (s) => s.replace(/[&<>]/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const escAttr = (s) => esc(s).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+const assetUrl = (baseDir, file) => "/api/asset?path=" + encodeURIComponent(baseDir + file);
+const inline = (s, baseDir) => esc(s)
+  .replace(/!\[([^\]]*)\]\((assets\/[^)\s]+)\)/g, (_, alt, file) => `<a href="${assetUrl(baseDir, file)}" target="_blank" rel="noopener"><img src="${assetUrl(baseDir, file)}" alt="${escAttr(alt)}" loading="lazy"></a>`)
+  .replace(/`([^`]+)`/g, "<code>$1</code>")
+  .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
+  .replace(/\[([^\]]+)\]\((assets\/[^)\s]+)\)/g, (_, label, file) => `<a href="${assetUrl(baseDir, file)}" target="_blank" rel="noopener">${label}</a>`)
+  .replace(/\[([^\]]+)\]\((https?:[^)\s]+)\)/g, (_, label, url) => `<a href="${escAttr(url)}" target="_blank" rel="noopener">${label}</a>`);
+
+function md(src, openEntries, baseDir) {
+  const out = []; let list = null, code = null, table = false, entry = false;
+  const closeEntry = () => { if (entry) { out.push("</div></details>"); entry = false; } };
+  const closeList = () => { if (list) { out.push("</" + list + ">"); list = null; } };
+  const closeTable = () => { if (table) { out.push("</table>"); table = false; } };
+  for (const line of src.split(/\r?\n/)) {
+    if (code !== null) {
+      if (line.startsWith("```")) { out.push("<pre><code>" + esc(code.join("\n")) + "</code></pre>"); code = null; }
+      else code.push(line);
+      continue;
+    }
+    if (line.startsWith("```")) { closeList(); closeTable(); code = []; continue; }
+    let m;
+    if (/^\s*\|.*\|\s*$/.test(line)) {
+      closeList();
+      if (/^\s*\|[\s:|-]+\|\s*$/.test(line)) continue;
+      if (!table) { out.push("<table>"); table = true; }
+      out.push("<tr>" + line.trim().slice(1, -1).split("|").map((c) => "<td>" + inline(c.trim(), baseDir) + "</td>").join("") + "</tr>");
+      continue;
+    }
+    closeTable();
+    if ((m = line.match(/^##\s+(.*)/))) {
+      closeList(); closeEntry();
+      out.push(`<details class="entry"${openEntries ? " open" : ""}><summary>${inline(m[1], baseDir)}</summary><div class="entryBody">`); entry = true;
+    }
+    else if ((m = line.match(/^(#{1,4})\s+(.*)/))) { if (m[1].length === 1) closeEntry(); closeList(); out.push("<h" + m[1].length + ">" + inline(m[2], baseDir) + "</h" + m[1].length + ">"); }
+    else if ((m = line.match(/^\s*[-*]\s+(.*)/))) { if (list !== "ul") { closeList(); out.push("<ul>"); list = "ul"; } out.push("<li>" + inline(m[1], baseDir) + "</li>"); }
+    else if ((m = line.match(/^\s*\d+\.\s+(.*)/))) { if (list !== "ol") { closeList(); out.push("<ol>"); list = "ol"; } out.push("<li>" + inline(m[1], baseDir) + "</li>"); }
+    else if (!line.trim()) closeList();
+    else { closeList(); out.push("<p>" + inline(line, baseDir) + "</p>"); }
+  }
+  closeList(); closeTable();
+  if (code !== null) out.push("<pre><code>" + esc(code.join("\n")) + "</code></pre>");
+  closeEntry();
+  return out.join("\n");
+}
+
+async function load() {
+  const files = await (await fetch("/api/list")).json();
+  days = await Promise.all(files.map(async (f) => {
+    const name = f.path.split("/").pop().replace(/\.md$/, "");
+    const text = await (await fetch("/api/file?path=" + encodeURIComponent(f.path))).text();
+    const slash = f.path.lastIndexOf("/");
+    return { path: f.path, baseDir: slash < 0 ? "" : f.path.slice(0, slash + 1), date: name, month: /^\d{4}-\d{2}/.test(name) ? name.slice(0, 7) : "기타", text };
+  }));
+  days.sort((a, b) => b.date.localeCompare(a.date));
+  const months = [...new Set(days.map((d) => d.month))];
+  const cur = $("month").value;
+  $("month").innerHTML = '<option value="">전체 월</option>' + months.map((m) => `<option>${m}</option>`).join("");
+  $("month").value = months.includes(cur) ? cur : "";
+  $("meta").textContent = `${days.length}일 · ${new Date().toLocaleTimeString("ko-KR")} 기준`;
+  render();
+}
+
+function render() {
+  const q = $("q").value.trim().toLowerCase(), month = $("month").value;
+  const shown = days.filter((d) => (!month || d.month === month) && (!q || (d.date + d.text).toLowerCase().includes(q)));
+  if (!shown.length) { $("list").innerHTML = '<div class="empty">표시할 로그가 없습니다.</div>'; return; }
+  const latest = days[0]?.date;
+  let html = "", last = "";
+  for (const d of shown) {
+    if (d.month !== last) { html += `<div class="month">${d.month.replace("-", "년 ")}월</div>`; last = d.month; }
+    const t = new Date(d.date + "T00:00:00");
+    const wd = isNaN(t) ? "" : WD[t.getDay()] + "요일";
+    const entries = (d.text.match(/^## /gm) || []).length;
+    let body = md(d.text, allOpen || q, d.baseDir);
+    if (q) body = body.replace(/(<[^>]*>)|([^<]+)/g, (_, tag, txt) => tag || txt.replace(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), (x) => "<mark>" + x + "</mark>"));
+    const open = allOpen || q || d.date === latest;
+    html += `<details class="day" ${open ? "open" : ""}><summary><span class="date">${d.date}</span><span class="wd">${wd}</span>${d.date === latest ? '<span class="new">최신</span>' : ""}<span class="chip">항목 ${entries}</span></summary><div class="body">${body}</div></details>`;
+  }
+  $("list").innerHTML = html;
+}
+
+$("q").addEventListener("input", render);
+$("month").addEventListener("change", render);
+$("reload").addEventListener("click", load);
+$("toggle").addEventListener("click", () => { allOpen = !allOpen; $("toggle").textContent = allOpen ? "최신만 펼치기" : "모두 펼치기"; render(); });
+load().catch((e) => { $("list").innerHTML = '<div class="empty">불러오지 못했습니다. <code>npm run worklog</code>로 서버를 실행했는지 확인하세요.<br>' + esc(String(e)) + "</div>"; });
+</script>
+</body>
+</html>

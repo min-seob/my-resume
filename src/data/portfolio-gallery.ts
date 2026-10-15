@@ -14,6 +14,7 @@ export type PortfolioProject = {
   category: string;
   description: string;
   cover: PortfolioScreen;
+  coverPair?: PortfolioScreen[];
   screens: PortfolioScreen[];
 };
 
@@ -80,15 +81,47 @@ export const portfolioProjects: PortfolioProject[] = [
     title: "에즈아르카나 예약",
     category: "상담 예약·채팅",
     description:
-      "30분·50분 상담 예약부터 카드 리딩과 실시간 채팅까지 이어지는 모바일 예약 시스템입니다. 화면 속 대화와 예약 정보는 샘플로 구성했습니다.",
+      "상담 시간 선택부터 날짜·가능 시간 예약, 카드 리딩과 실시간 채팅까지 이어지는 모바일 예약 시스템입니다. 캡처에 표시된 날짜와 시간은 테스트 샘플입니다.",
     cover: {
-      id: "duration",
-      label: "상담 시간 선택",
-      alt: "30분과 50분 상담 시간을 고르는 예약 화면",
-      src: "/portfolio/reservation-duration.png",
-      blur: "soft",
+      id: "date-time",
+      label: "날짜·시간 선택",
+      alt: "예약 달력과 가능한 상담 시간을 함께 보여주는 화면",
+      src: "/portfolio/reservation-time.png",
     },
+    coverPair: [
+      {
+        id: "date-cover",
+        label: "날짜 선택",
+        alt: "예약 날짜를 고르는 달력 화면",
+        src: "/portfolio/reservation-date.png",
+      },
+      {
+        id: "time-cover",
+        label: "시간 선택",
+        alt: "달력 아래 가능한 상담 시작 시간이 함께 표시된 화면",
+        src: "/portfolio/reservation-time.png",
+      },
+    ],
     screens: [
+      {
+        id: "date-time",
+        label: "날짜·시간 선택",
+        alt: "예약 날짜 달력과 가능한 상담 시작 시간이 함께 표시된 화면",
+        src: "/portfolio/reservation-time.png",
+      },
+      {
+        id: "date",
+        label: "날짜 선택",
+        alt: "예약 날짜를 선택하는 달력 화면",
+        src: "/portfolio/reservation-date.png",
+      },
+      {
+        id: "duration",
+        label: "리딩 시간 선택",
+        alt: "30분과 50분 상담 시간을 고르는 예약 화면",
+        src: "/portfolio/reservation-duration.png",
+        blur: "soft",
+      },
       {
         id: "complete",
         label: "예약 완료",
@@ -117,14 +150,23 @@ export const portfolioProjects: PortfolioProject[] = [
     title: "코브원 충전 플랫폼",
     category: "백오피스·배치",
     description:
-      "충전 플랫폼의 운영 백오피스와 배치 영역을 개발했습니다. 공개용 캡처는 실제 화면을 확보한 뒤 운영 정보를 가리는 방식으로 준비 중입니다.",
+      "충전 플랫폼의 운영 백오피스와 배치 영역을 개발했습니다. 사용자 정보와 최근 방문·공지 목록을 가린 운영 홈 화면을 확인할 수 있습니다.",
     cover: {
-      id: "admin-html",
-      label: "HTML 화면",
-      alt: "전체 데이터 흐림 처리를 위해 캡처를 기다리는 충전 플랫폼 백오피스 화면",
-      pending: true,
+      id: "coev-home",
+      label: "운영 홈",
+      alt: "사용자 정보와 최근 방문·공지 목록을 흐림 처리한 코브원 운영 홈 화면",
+      src: "/portfolio/coev-home.png",
+      fit: "contain",
     },
-    screens: [],
+    screens: [
+      {
+        id: "coev-home",
+        label: "운영 홈",
+        alt: "사용자 정보와 최근 방문·공지 목록을 흐림 처리한 코브원 운영 홈 화면",
+        src: "/portfolio/coev-home.png",
+        fit: "contain",
+      },
+    ],
   },
   {
     slug: "stockmate",
@@ -215,10 +257,18 @@ export const portfolioProjects: PortfolioProject[] = [
     cover: {
       id: "resume-home",
       label: "메인 페이지",
-      alt: "경력기술서 메인 페이지 캡처 대기",
-      pending: true,
+      alt: "김민섭 경력기술서 메인 랜딩페이지",
+      src: "/portfolio/resume-home.png",
+      fit: "contain",
     },
     screens: [
+      {
+        id: "resume-home",
+        label: "메인 페이지",
+        alt: "김민섭 경력기술서 메인 랜딩페이지",
+        src: "/portfolio/resume-home.png",
+        fit: "contain",
+      },
       {
         id: "miniroom-coding",
         label: "미니룸 · 코딩방",

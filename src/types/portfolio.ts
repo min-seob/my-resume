@@ -13,6 +13,7 @@ export type ProjectCategory = "금융·결제" | "기업형 AI" | "개인 서비
 
 export type Project = {
   title: string;
+  resumeHeading?: string;
   period: string;
   client: string;
   company: string;

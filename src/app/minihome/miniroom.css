@@ -1,14 +1,3 @@
-.minihome .mini-minimi__stage {
-  min-height: 178px;
-  padding-block: 10px;
-}
-
-.minihome .mini-minimi__sprite {
-  width: 96px;
-  height: 160px;
-  image-rendering: pixelated;
-}
-
 .minihome .miniroom-card {
   min-width: 0;
   padding: 22px;

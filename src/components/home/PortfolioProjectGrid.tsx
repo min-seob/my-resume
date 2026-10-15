@@ -13,7 +13,11 @@ export function PortfolioProjectGrid() {
             className="portfolio-project-card"
             aria-label={`${project.title} 화면 모아보기`}
           >
-            <PortfolioScreenPreview screen={project.cover} display="cover" />
+            <PortfolioScreenPreview
+              screen={project.cover}
+              pairedScreens={project.coverPair}
+              display="cover"
+            />
             <span className="portfolio-project-card__label">{project.title}</span>
           </Link>
         </li>

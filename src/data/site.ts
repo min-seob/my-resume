@@ -64,7 +64,7 @@ export const stockmate = {
 };
 
 export const careerHistory = [
-  { period: "2026 ~", title: "충전 플랫폼 백오피스·배치, PG/결제, 기업형 AI" },
+  { period: "2026 ~", title: "현대엔지니어링 충전플랫폼 MVP, PG/결제, 기업형 AI" },
   { period: "2024 ~ 2026", title: "NH Pay, 현대카드, 삼성카드 등 카드·간편결제" },
   { period: "2021 ~ 2024", title: "NH포탈, KB GSPAY, 우리은행 IB 등 금융권 개발" },
   { period: "2017 ~ 2021", title: "도로공사·지방세·세입세출 시스템 개발/운영" },
@@ -72,7 +72,7 @@ export const careerHistory = [
 ];
 
 export const careerTable = [
-  { company: "코브원", period: "2026.06 ~ 현재", rank: "책임", work: "충전 플랫폼 백오피스·배치 백엔드 개발" },
+  { company: "코브원", period: "2026.06 ~ 현재", rank: "책임", work: "현대엔지니어링 전기차 충전플랫폼 MVP 개발" },
   { company: "다날", period: "2026.03 ~ 2026.06", rank: "과장", work: "다날 PG사 상품권 결제(승인) 업무 개발" },
   { company: "엣데브", period: "2025.10 ~ 2026.01", rank: "매니저", work: "현대모비스 기업특화 LLM 연계 (NotebookLM 방식) 개발" },
   { company: "알티시스템", period: "2025.04 ~ 2025.09", rank: "과장", work: "삼성카드 모니모앱 오픈앱카드 연동개발" },

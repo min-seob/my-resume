@@ -28,4 +28,26 @@ dev-server*.log
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
 docs/
+
+# Local IDE and Codex hook state
+/.idea/
+/.local/
+
+# Keep project docs ignored except for the dated worklog, viewer, and linked assets.
+!docs/
+docs/*
+!docs/worklog/
+docs/worklog/*
+!docs/worklog/page/
+docs/worklog/page/*
+!docs/worklog/page/*.html
+!docs/worklog/page/*.mjs
+!docs/worklog/[0-9][0-9][0-9][0-9]/
+docs/worklog/[0-9][0-9][0-9][0-9]/*
+!docs/worklog/[0-9][0-9][0-9][0-9]/*.md
+!docs/worklog/[0-9][0-9][0-9][0-9]/assets/
+docs/worklog/[0-9][0-9][0-9][0-9]/assets/*
+!docs/worklog/[0-9][0-9][0-9][0-9]/assets/**

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import sharp from "sharp";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const source = path.join(root, "doc/project-memory/assets/10-15");
+const source = path.join(root, "docs/worklog/2610/assets");
 const output = path.join(root, "public/minihome");
 await fs.mkdir(output, { recursive: true });
 
@@ -119,7 +119,12 @@ for (const [name, filename, shapes] of foregrounds) {
 }
 console.log("Prepared furnished bedroom, rotating screen patches and 14-frame walking/seated hoodie atlas.");
 
+await import("./prepare-minimi-bed-pose.mjs");
+await import("./prepare-kkomi-belly-up.mjs");
+
 // Normalize the photo-derived cat animation sheet for the upstairs room.
+await import("./prepare-kkomi-tail-v2.mjs");
+
 await import("./prepare-cat-assets.mjs");
 
 await import("./prepare-cat-actions.mjs");

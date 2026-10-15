@@ -50,7 +50,7 @@ export default function Home() {
                   <span className="w-[180px] shrink-0 text-sm leading-7 text-muted">{project.period}</span>
                   <span className="min-w-0 flex-[1_1_440px]">
                     <span className="block text-[17px] font-bold text-ink">
-                      {project.client} · {project.title}
+                      {project.resumeHeading ?? `${project.client} · ${project.title}`}
                     </span>
                     <span className="block pt-1 text-sm leading-7 text-muted">{project.description}</span>
                   </span>
