@@ -24,8 +24,11 @@ export default function PortfolioPage() {
           </Link>
           <header className="portfolio-page__intro">
             <p className="portfolio-page__eyebrow">PORTFOLIO · 06 PROJECTS</p>
-            <h1>만들어 온 화면들</h1>
-            <p>프로젝트를 선택해 화면과 이야기를 둘러보세요.</p>
+            <h1>사이드 프로젝트 포트폴리오</h1>
+            <p>
+              프로젝트를 선택해 화면과 이야기를 둘러보세요.{" "}
+              <strong>서비스가 종료된 프로젝트가 있다는 점 양해 부탁드립니다.</strong>
+            </p>
           </header>
           <PortfolioProjectGrid />
         </div>
