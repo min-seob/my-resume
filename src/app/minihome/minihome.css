@@ -522,6 +522,68 @@
   gap: 10px;
 }
 
+.minihome .mini-guestbook__head-actions,
+.minihome .mini-guestbook__entry-actions {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.minihome .mini-guestbook__head-actions {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.minihome .mini-guestbook__admin-toggle,
+.minihome .mini-guestbook__delete {
+  border: 1px solid var(--mini-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--mini-ink-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.minihome .mini-guestbook__admin-toggle {
+  min-height: 28px;
+  padding: 5px 9px;
+}
+
+.minihome .mini-guestbook__delete {
+  padding: 4px 8px;
+}
+
+.minihome .mini-guestbook__admin-toggle:hover,
+.minihome .mini-guestbook__delete:hover:not(:disabled) {
+  border-color: var(--mini-sky-dark);
+  color: var(--mini-sky-dark);
+}
+
+.minihome .mini-guestbook__admin-toggle:focus-visible,
+.minihome .mini-guestbook__delete:focus-visible {
+  outline: 2px solid var(--mini-sky-dark);
+  outline-offset: 2px;
+}
+
+.minihome .mini-guestbook__delete:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.minihome .mini-guestbook__admin-form {
+  max-width: 380px;
+  margin: 14px 0 0 auto;
+}
+
+.minihome .mini-guestbook__admin-form > p {
+  margin: 0;
+  color: var(--mini-ink-soft);
+  font-size: 11px;
+  line-height: 1.6;
+}
+
 .minihome .mini-guestbook__meta strong {
   overflow-wrap: anywhere;
   font-size: 12px;

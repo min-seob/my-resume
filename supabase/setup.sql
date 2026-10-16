@@ -23,6 +23,21 @@ create policy "Public can read published blog posts"
   to anon, authenticated
   using (status = 'published' and published_at is not null and published_at <= now());
 
+create table if not exists public.guestbook_admins (
+  email text primary key check (email = lower(btrim(email))),
+  created_at timestamptz not null default now()
+);
+
+alter table public.guestbook_admins enable row level security;
+revoke all on table public.guestbook_admins from anon, authenticated;
+grant select on table public.guestbook_admins to authenticated;
+drop policy if exists "Guestbook admins can read their own registration" on public.guestbook_admins;
+create policy "Guestbook admins can read their own registration"
+  on public.guestbook_admins
+  for select
+  to authenticated
+  using (email = lower((select auth.jwt() ->> 'email')));
+
 create table if not exists public.guestbook_entries (
   id uuid primary key default gen_random_uuid(),
   display_name text not null check (char_length(btrim(display_name)) between 1 and 32),
@@ -37,6 +52,7 @@ alter table public.guestbook_entries
 alter table public.guestbook_entries enable row level security;
 revoke all on table public.guestbook_entries from anon, authenticated;
 grant select, insert on table public.guestbook_entries to anon, authenticated;
+grant delete on table public.guestbook_entries to authenticated;
 drop policy if exists "Public can read approved guestbook entries" on public.guestbook_entries;
 drop policy if exists "Public can read guestbook entries" on public.guestbook_entries;
 create policy "Public can read guestbook entries"
@@ -51,3 +67,15 @@ create policy "Public can submit guestbook entries"
   for insert
   to anon, authenticated
   with check (status = 'approved');
+drop policy if exists "Guestbook admins can delete entries" on public.guestbook_entries;
+create policy "Guestbook admins can delete entries"
+  on public.guestbook_entries
+  for delete
+  to authenticated
+  using (
+    exists (
+      select 1
+      from public.guestbook_admins as admin
+      where admin.email = lower((select auth.jwt() ->> 'email'))
+    )
+  );

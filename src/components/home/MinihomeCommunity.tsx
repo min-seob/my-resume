@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
+import type { Session } from "@supabase/supabase-js";
 
 import { supabase } from "@/lib/supabase";
 
@@ -37,6 +38,56 @@ export function MinihomeCommunity() {
   const [website, setWebsite] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState("");
+  const [session, setSession] = useState<Session | null>(null);
+  const [adminUserId, setAdminUserId] = useState<string | null>(null);
+  const [adminLoginOpen, setAdminLoginOpen] = useState(false);
+  const [adminBusy, setAdminBusy] = useState(false);
+  const [adminMessage, setAdminMessage] = useState("");
+  const [deletingEntryId, setDeletingEntryId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const client = supabase;
+    if (!client) return;
+
+    let active = true;
+    const { data: { subscription } } = client.auth.onAuthStateChange((_event, nextSession) => {
+      if (active) setSession(nextSession);
+    });
+    void client.auth.getSession().then(({ data }) => {
+      if (active) setSession(data.session);
+    });
+
+    return () => {
+      active = false;
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const sessionUserId = session?.user.id;
+  const isAdmin = Boolean(sessionUserId && adminUserId === sessionUserId);
+
+  useEffect(() => {
+    const client = supabase;
+    if (!client || !sessionUserId) return;
+
+    let active = true;
+    void client.from("guestbook_admins")
+      .select("email")
+      .maybeSingle()
+      .then(({ data, error }) => {
+        if (!active) return;
+        const authorized = !error && Boolean(data);
+        setAdminUserId(authorized ? sessionUserId : null);
+        if (authorized) {
+          setAdminLoginOpen(false);
+          setAdminMessage("관리자로 로그인했습니다.");
+        } else {
+          setAdminMessage("이 이메일에는 삭제 권한이 없습니다.");
+        }
+      });
+
+    return () => { active = false; };
+  }, [sessionUserId]);
 
   useEffect(() => {
     if (!supabase) return;
@@ -105,6 +156,56 @@ export function MinihomeCommunity() {
     setFeedback("방명록에 바로 공개됐어요.");
   }
 
+  async function sendAdminLoginLink() {
+    if (!supabase || adminBusy) return;
+
+    setAdminBusy(true);
+    setAdminMessage("");
+    try {
+      const response = await fetch("/api/guestbook-admin/login", { method: "POST" });
+      const result = await response.json().catch(() => null) as { error?: string } | null;
+
+      if (!response.ok) {
+        setAdminMessage(result?.error ?? "로그인 링크를 보내지 못했어요. 잠시 후 다시 시도해 주세요.");
+        return;
+      }
+
+      setAdminMessage("로그인 링크를 이메일로 보냈어요. 링크를 열면 삭제 기능이 활성화됩니다.");
+    } catch {
+      setAdminMessage("로그인 링크를 보내지 못했어요. 네트워크 연결을 확인한 뒤 다시 시도해 주세요.");
+    } finally {
+      setAdminBusy(false);
+    }
+  }
+
+  async function signOutAdmin() {
+    if (!supabase) return;
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      setAdminMessage("로그아웃하지 못했어요. 다시 시도해 주세요.");
+      return;
+    }
+    setAdminLoginOpen(false);
+    setAdminMessage("");
+  }
+
+  async function deleteGuestbookEntry(entryId: string) {
+    if (!supabase || !isAdmin || deletingEntryId) return;
+    if (!window.confirm("이 방명록을 삭제할까요?")) return;
+
+    setDeletingEntryId(entryId);
+    const { error } = await supabase.from("guestbook_entries").delete().eq("id", entryId);
+    setDeletingEntryId(null);
+
+    if (error) {
+      setAdminMessage("삭제하지 못했어요. 관리자 로그인 상태를 확인해 주세요.");
+      return;
+    }
+
+    setEntries((current) => current.filter((entry) => entry.id !== entryId));
+    setAdminMessage("방명록을 삭제했습니다.");
+  }
+
   return (
     <>
       <section id="blog" className="mini-section mini-blog" aria-labelledby="blog-title">
@@ -153,9 +254,37 @@ export function MinihomeCommunity() {
             <span className="mini-community__eyebrow">GUESTBOOK</span>
             <h2 id="guestbook-title">방명록</h2>
           </div>
-          {entries.length > 0 ? <span className="mini-community__count">{entries.length}개의 인사</span> : null}
+          <div className="mini-guestbook__head-actions">
+            {entries.length > 0 ? <span className="mini-community__count">{entries.length}개의 인사</span> : null}
+            {isAdmin ? (
+              <button type="button" className="mini-guestbook__admin-toggle" onClick={signOutAdmin}>
+                관리자 로그아웃
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="mini-guestbook__admin-toggle"
+                onClick={() => {
+                  setAdminLoginOpen((open) => !open);
+                  setAdminMessage("");
+                }}
+              >
+                관리자 로그인
+              </button>
+            )}
+          </div>
         </div>
         <p className="mini-section__intro">방문 인사를 남겨주세요. 작성하면 바로 공개됩니다.</p>
+        {adminLoginOpen && !isAdmin ? (
+          <div className="mini-guestbook__form mini-guestbook__admin-form">
+            <p>등록된 관리자 이메일로 로그인 링크를 보냅니다.</p>
+            {adminMessage ? <p className="mini-guestbook__feedback" role="status">{adminMessage}</p> : null}
+            <button type="button" onClick={() => void sendAdminLoginLink()} disabled={adminBusy}>
+              {adminBusy ? "보내는 중…" : "내 이메일로 로그인 링크 받기"}
+            </button>
+          </div>
+        ) : null}
+        {adminMessage && !adminLoginOpen ? <p className="mini-guestbook__admin-message" role="status">{adminMessage}</p> : null}
 
         <div className="mini-guestbook__grid">
           <div className="mini-guestbook__entries" aria-live="polite">
@@ -166,7 +295,20 @@ export function MinihomeCommunity() {
                 <li className="mini-guestbook__entry" key={entry.id}>
                   <div className="mini-guestbook__meta">
                     <strong>{entry.display_name}</strong>
-                    <time dateTime={entry.created_at}>{formatDate(entry.created_at)}</time>
+                    <div className="mini-guestbook__entry-actions">
+                      <time dateTime={entry.created_at}>{formatDate(entry.created_at)}</time>
+                      {isAdmin ? (
+                        <button
+                          type="button"
+                          className="mini-guestbook__delete"
+                          aria-label={`${entry.display_name} 방명록 삭제`}
+                          disabled={deletingEntryId === entry.id}
+                          onClick={() => void deleteGuestbookEntry(entry.id)}
+                        >
+                          {deletingEntryId === entry.id ? "삭제 중…" : "삭제"}
+                        </button>
+                      ) : null}
+                    </div>
                   </div>
                   <p>{entry.message}</p>
                 </li>
