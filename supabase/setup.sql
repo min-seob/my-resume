@@ -27,22 +27,27 @@ create table if not exists public.guestbook_entries (
   id uuid primary key default gen_random_uuid(),
   display_name text not null check (char_length(btrim(display_name)) between 1 and 32),
   message text not null check (char_length(btrim(message)) between 1 and 500),
-  status text not null default 'pending' check (status in ('pending', 'approved', 'rejected')),
+  status text not null default 'approved' check (status in ('pending', 'approved', 'rejected')),
   created_at timestamptz not null default now()
 );
+
+alter table public.guestbook_entries
+  alter column status set default 'approved';
 
 alter table public.guestbook_entries enable row level security;
 revoke all on table public.guestbook_entries from anon, authenticated;
 grant select, insert on table public.guestbook_entries to anon, authenticated;
 drop policy if exists "Public can read approved guestbook entries" on public.guestbook_entries;
-create policy "Public can read approved guestbook entries"
+drop policy if exists "Public can read guestbook entries" on public.guestbook_entries;
+create policy "Public can read guestbook entries"
   on public.guestbook_entries
   for select
   to anon, authenticated
-  using (status = 'approved');
+  using (true);
 drop policy if exists "Public can submit pending guestbook entries" on public.guestbook_entries;
-create policy "Public can submit pending guestbook entries"
+drop policy if exists "Public can submit guestbook entries" on public.guestbook_entries;
+create policy "Public can submit guestbook entries"
   on public.guestbook_entries
   for insert
   to anon, authenticated
-  with check (status = 'pending');
+  with check (status = 'approved');

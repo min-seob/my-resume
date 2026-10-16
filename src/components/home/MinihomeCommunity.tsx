@@ -39,8 +39,8 @@ export function MinihomeCommunity() {
   const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
+    if (!supabase) return;
     const client = supabase;
-    if (!client) return;
 
     let active = true;
     async function loadCommunity() {
@@ -54,7 +54,6 @@ export function MinihomeCommunity() {
           .limit(6),
         client.from("guestbook_entries")
           .select("id, display_name, message, created_at")
-          .eq("status", "approved")
           .order("created_at", { ascending: false })
           .limit(12),
       ]);
@@ -72,13 +71,14 @@ export function MinihomeCommunity() {
 
   async function submitGuestbook(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!supabase || submitting) return;
+    const client = supabase;
+    if (!client || submitting) return;
 
     if (website.trim()) {
       setDisplayName("");
       setMessage("");
       setWebsite("");
-      setFeedback("고맙습니다. 확인 후 방명록에 공개할게요.");
+      setFeedback("고맙습니다.");
       return;
     }
 
@@ -88,20 +88,21 @@ export function MinihomeCommunity() {
 
     setSubmitting(true);
     setFeedback("");
-    const { error } = await supabase.from("guestbook_entries").insert({
-      display_name: cleanName,
-      message: cleanMessage,
-    });
+    const { data, error } = await client.from("guestbook_entries")
+      .insert({ display_name: cleanName, message: cleanMessage })
+      .select("id, display_name, message, created_at")
+      .single();
     setSubmitting(false);
 
-    if (error) {
+    if (error || !data) {
       setFeedback("등록하지 못했어요. 잠시 후 다시 시도해 주세요.");
       return;
     }
 
+    setEntries((current) => [data as GuestbookEntry, ...current].slice(0, 12));
     setDisplayName("");
     setMessage("");
-    setFeedback("고맙습니다. 확인 후 방명록에 공개할게요.");
+    setFeedback("방명록에 바로 공개됐어요.");
   }
 
   return (
@@ -154,7 +155,7 @@ export function MinihomeCommunity() {
           </div>
           {entries.length > 0 ? <span className="mini-community__count">{entries.length}개의 인사</span> : null}
         </div>
-        <p className="mini-section__intro">방문 인사를 남겨주세요. 글은 확인 후 공개됩니다.</p>
+        <p className="mini-section__intro">방문 인사를 남겨주세요. 작성하면 바로 공개됩니다.</p>
 
         <div className="mini-guestbook__grid">
           <div className="mini-guestbook__entries" aria-live="polite">

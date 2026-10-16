@@ -30,7 +30,7 @@
 - 홈 문구 `기록은 조금 더 나답게.`는 개인 공간의 방향을 나타냅니다.
 - 헤더의 `한마디`와 `요즘의 한마디` 카드는 제거했습니다.
 - 다이어리는 사이드 프로젝트와 개발 과정을 담는 `개발 블로그`로 바꾸고, 블로그 글과 방명록 저장소로 Supabase를 선택했습니다.
-- Supabase 프로젝트 `resume`(`ap-northeast-2`, ref `monlzpwtkzoipixmwqvy`)를 `seoby's db` 조직에 만들고, `supabase/setup.sql`로 `public`의 블로그·방명록 테이블과 RLS 정책을 적용했습니다. 프로젝트 URL과 Publishable key는 무시 처리된 `.env.local`에 설정했습니다. [작업 로그](docs/worklog/2610/2026-10-16.md)
+- Supabase 프로젝트 `resume`(`ap-northeast-2`, ref `monlzpwtkzoipixmwqvy`)를 `seoby's db` 조직에 만들고, `supabase/setup.sql`로 `public`의 블로그·방명록 테이블과 RLS 정책을 적용했습니다. 방명록은 작성 즉시 공개하고 공개 역할에는 읽기·제출만 허용합니다. 삭제는 프로젝트 소유자가 Supabase Table Editor에서 처리합니다. 프로젝트 URL과 Publishable key는 무시 처리된 `.env.local`에 설정했습니다. [작업 로그](docs/worklog/2610/2026-10-16.md)
 
 ## 현재 시안
 
