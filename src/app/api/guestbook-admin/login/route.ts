@@ -23,7 +23,7 @@ export async function POST(request: Request) {
   });
   const { error } = await supabase.auth.signInWithOtp({
     email: ownerEmail,
-    options: { emailRedirectTo: `${origin}/minihome`, shouldCreateUser: true },
+    options: { emailRedirectTo: `${origin}/admin`, shouldCreateUser: true },
   });
 
   if (error) {

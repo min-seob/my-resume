@@ -1,0 +1,175 @@
+.minihome .mini-admin-page {
+  width: min(900px, calc(100% - 40px));
+  min-height: calc(100vh - 154px);
+  margin: 0 auto;
+  padding: 34px 0 54px;
+  color: var(--mini-ink);
+}
+
+.minihome .mini-admin-panel {
+  padding: clamp(20px, 4vw, 34px);
+  border: 1px solid var(--mini-line);
+  border-radius: var(--mini-radius-card);
+  background: var(--mini-card);
+  box-shadow: 0 8px 24px rgb(45 77 104 / 6%);
+}
+
+.minihome .mini-admin__header,
+.minihome .mini-admin__summary,
+.minihome .mini-admin__entry-meta,
+.minihome .mini-admin__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.minihome .mini-admin__header h1 {
+  margin: 6px 0 0;
+  font-family: var(--mini-display);
+  font-size: clamp(22px, 3vw, 30px);
+  letter-spacing: -0.04em;
+}
+
+.minihome .mini-admin__intro,
+.minihome .mini-admin__status,
+.minihome .mini-admin__feedback,
+.minihome .mini-admin__login p {
+  color: var(--mini-ink-soft);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.minihome .mini-admin__intro {
+  margin: 12px 0 24px;
+}
+
+.minihome .mini-admin__login {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--mini-line);
+  border-radius: var(--mini-radius-soft);
+  background: var(--mini-sky-wash);
+}
+
+.minihome .mini-admin__login p {
+  margin: 0;
+}
+
+.minihome .mini-admin__login button,
+.minihome .mini-admin__pagination button {
+  min-height: 38px;
+  padding: 8px 14px;
+  border: 1px solid var(--mini-sky-dark);
+  border-radius: var(--mini-radius-pill);
+  background: var(--mini-sky-dark);
+  color: var(--mini-card);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.minihome .mini-admin__login button:disabled,
+.minihome .mini-admin__pagination button:disabled {
+  cursor: wait;
+  opacity: 0.55;
+}
+
+.minihome .mini-admin__text-button {
+  min-height: 32px;
+  padding: 6px 11px;
+  border: 1px solid var(--mini-line);
+  border-radius: var(--mini-radius-pill);
+  background: transparent;
+  color: var(--mini-ink-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+}
+
+.minihome .mini-admin__text-button:hover:not(:disabled) {
+  border-color: var(--mini-sky-dark);
+  color: var(--mini-sky-dark);
+}
+
+.minihome .mini-admin__text-button:focus-visible,
+.minihome .mini-admin__login button:focus-visible,
+.minihome .mini-admin__pagination button:focus-visible {
+  outline: 2px solid var(--mini-sky-dark);
+  outline-offset: 2px;
+}
+
+.minihome .mini-admin__summary {
+  margin: 22px 0 10px;
+}
+
+.minihome .mini-admin__summary p {
+  margin: 0;
+  color: var(--mini-ink-soft);
+  font-size: 12px;
+}
+
+.minihome .mini-admin__summary strong {
+  color: var(--mini-ink);
+}
+
+.minihome .mini-admin__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.minihome .mini-admin__entry {
+  display: grid;
+  justify-items: start;
+  gap: 8px;
+  padding: 16px 0;
+  border-top: 1px solid var(--mini-line);
+}
+
+.minihome .mini-admin__entry-meta strong {
+  overflow-wrap: anywhere;
+  font-size: 13px;
+}
+
+.minihome .mini-admin__entry-meta time {
+  color: var(--mini-ink-soft);
+  font-family: var(--mini-mono);
+  font-size: 10px;
+}
+
+.minihome .mini-admin__entry > p {
+  margin: 0;
+  color: var(--mini-ink-soft);
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.minihome .mini-admin__pagination {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.minihome .mini-admin__pagination span {
+  min-width: 54px;
+  color: var(--mini-ink-soft);
+  font-family: var(--mini-mono);
+  font-size: 11px;
+  text-align: center;
+}
+
+@media (max-width: 520px) {
+  .minihome .mini-admin-page {
+    width: min(calc(100% - 24px), 900px);
+    padding: 20px 0 36px;
+  }
+
+  .minihome .mini-admin-panel {
+    padding: 18px;
+  }
+}
