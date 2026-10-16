@@ -23,7 +23,7 @@ export default function PortfolioPage() {
             <span aria-hidden="true">←</span> 미니홈
           </Link>
           <header className="portfolio-page__intro">
-            <p className="portfolio-page__eyebrow">PORTFOLIO · 07 PROJECTS</p>
+            <p className="portfolio-page__eyebrow">PORTFOLIO · 06 PROJECTS</p>
             <h1>만들어 온 화면들</h1>
             <p>프로젝트를 선택해 화면과 이야기를 둘러보세요.</p>
           </header>

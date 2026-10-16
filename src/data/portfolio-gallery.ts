@@ -13,6 +13,7 @@ export type PortfolioProject = {
   title: string;
   category: string;
   description: string;
+  descriptionItems?: string[];
   cover: PortfolioScreen;
   coverPair?: PortfolioScreen[];
   screens: PortfolioScreen[];
@@ -23,8 +24,14 @@ export const portfolioProjects: PortfolioProject[] = [
     slug: "asarcana",
     title: "에즈아르카나",
     category: "AI 타로 리딩",
-    description:
-      "PICK·TALK·DEEP·ROOM 네 가지 리딩 흐름을 담은 AI 타로 서비스입니다. 카드 선택부터 대화형 리딩까지 이어지는 화면을 확인할 수 있습니다.",
+    description: "사용자의 고민을 AI 타로 리딩으로 풀어주는 서비스",
+    descriptionItems: [
+      "사용자의 고민을 AI 타로 리딩으로 풀어주는 서비스",
+      "PICK: 고민 입력 → 카드 선택 → 리딩 결과 확인",
+      "TALK: 채팅형 소통 리딩",
+      "DEEP: 원하는 대상을 설정하면 그 대상이 리딩하는 몰입형 채팅",
+      "ROOM: SNS형 고민 커뮤니티",
+    ],
     cover: {
       id: "hero",
       label: "PICK 카드 펼침",
@@ -80,8 +87,13 @@ export const portfolioProjects: PortfolioProject[] = [
     slug: "asarcana-reservation",
     title: "에즈아르카나 예약",
     category: "상담 예약·채팅",
-    description:
-      "상담 시간 선택부터 날짜·가능 시간 예약, 카드 리딩과 실시간 채팅까지 이어지는 모바일 예약 시스템입니다. 캡처에 표시된 날짜와 시간은 테스트 샘플입니다.",
+    description: "실제 타로리더와 1:1로 진행하는 예약·채팅형 리딩",
+    descriptionItems: [
+      "실제 타로리더와 1:1로 진행하는 예약·채팅형 리딩",
+      "일정 예약 후 채팅방에서 실제 상담 진행",
+      "타로리더의 카드 선택과 직접 리딩",
+      "30분·50분 상담 선택",
+    ],
     cover: {
       id: "date-time",
       label: "날짜·시간 선택",
@@ -146,34 +158,16 @@ export const portfolioProjects: PortfolioProject[] = [
     ],
   },
   {
-    slug: "coev",
-    title: "코브원 충전 플랫폼",
-    category: "백오피스·배치",
-    description:
-      "충전 플랫폼의 운영 백오피스와 배치 영역을 개발했습니다. 사용자 정보와 최근 방문·공지 목록을 가린 운영 홈 화면을 확인할 수 있습니다.",
-    cover: {
-      id: "coev-home",
-      label: "운영 홈",
-      alt: "사용자 정보와 최근 방문·공지 목록을 흐림 처리한 코브원 운영 홈 화면",
-      src: "/portfolio/coev-home.png",
-      fit: "contain",
-    },
-    screens: [
-      {
-        id: "coev-home",
-        label: "운영 홈",
-        alt: "사용자 정보와 최근 방문·공지 목록을 흐림 처리한 코브원 운영 홈 화면",
-        src: "/portfolio/coev-home.png",
-        fit: "contain",
-      },
-    ],
-  },
-  {
     slug: "stockmate",
     title: "StockMate",
     category: "AI 주식 브리핑",
-    description:
-      "뉴스 수집과 AI 요약을 일별 브리핑, 장중 뉴스, 실시간 채팅과 Discord 웹훅으로 이어주는 자동화 프로젝트입니다. 공개 화면에서 채팅 내용은 흐림 처리했습니다.",
+    description: "매일 오전 7시 뉴스 브리핑과 Discord 웹훅을 연결한 AI 자동화",
+    descriptionItems: [
+      "매일 오전 7시 전날·새벽 뉴스 브리핑",
+      "뉴스 수집·스크래핑 → AI 요약 → Discord 웹훅 전송",
+      "장중 뉴스 실시간 크롤링·스크래핑",
+      "실시간 소통 채팅방",
+    ],
     cover: {
       id: "market-view",
       label: "장중 시황",
@@ -205,8 +199,13 @@ export const portfolioProjects: PortfolioProject[] = [
     slug: "freestyle",
     title: "프리스타일 리부트 라운지",
     category: "게임 커뮤니티",
-    description:
-      "신규·복귀 유저가 포지션별 공략을 읽고 질문을 나누는 커뮤니티입니다. 메인 화면, 자유게시판, 크리에이터 영상 목록을 담았습니다.",
+    description: "FreeStyle Reboot 유저를 위한 자유게시판형 소통 라운지",
+    descriptionItems: [
+      "디시 갤러리 같은 분위기의 게임 자유게시판",
+      "관련 유튜버 최신 영상을 동기화해 링크로 제공",
+      "같은 팀 구하기",
+      "공략집",
+    ],
     cover: {
       id: "home",
       label: "메인 페이지",
@@ -233,8 +232,13 @@ export const portfolioProjects: PortfolioProject[] = [
     slug: "money",
     title: "가계부",
     category: "개인 금융 관리",
-    description:
-      "월별 수입·지출과 고정비, 카테고리별 소비를 살펴보는 개인 가계부입니다. 공개용 화면에서는 금액과 고정지출 항목을 흐림 처리했습니다.",
+    description: "개인 지출을 직접 등록·관리하는 비공개 가계부",
+    descriptionItems: [
+      "프리랜서·개인사업자 지출, 고정지출, 저축 내역 통계",
+      "카테고리 직접 설정, 계좌·카드 관리",
+      "지출 직접 등록",
+      "은행 거래내역서 일괄 등록 (엑셀 호환)",
+    ],
     cover: {
       id: "dashboard",
       label: "대시보드",

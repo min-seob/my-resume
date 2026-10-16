@@ -64,6 +64,31 @@
   line-height: 1.8;
 }
 
+.portfolio-detail__description-list {
+  display: grid;
+  max-width: 680px;
+  gap: 8px;
+  margin: 12px 0 0;
+  padding: 0;
+  color: var(--mini-ink-soft);
+  font-size: 14px;
+  line-height: 1.65;
+  list-style: none;
+}
+
+.portfolio-detail__description-list li {
+  position: relative;
+  padding-inline-start: 17px;
+}
+
+.portfolio-detail__description-list li::before {
+  position: absolute;
+  inset-inline-start: 0;
+  color: var(--mini-sky-dark);
+  content: "•";
+  font-weight: 800;
+}
+
 .portfolio-project-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

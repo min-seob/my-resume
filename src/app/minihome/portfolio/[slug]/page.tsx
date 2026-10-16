@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: PortfolioDetailPageProps): Pr
 
   return {
     title: `${project.title} | 포트폴리오`,
-    description: project.description,
+    description: project.descriptionItems?.join(" · ") ?? project.description,
   };
 }
 
@@ -51,7 +51,15 @@ export default async function PortfolioDetailPage({ params }: PortfolioDetailPag
           <header className="portfolio-detail__intro">
             <p className="portfolio-page__eyebrow">{project.category}</p>
             <h1>{project.title}</h1>
-            <p>{project.description}</p>
+            {project.descriptionItems?.length ? (
+              <ul className="portfolio-detail__description-list">
+                {project.descriptionItems.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              <p>{project.description}</p>
+            )}
           </header>
           {project.screens.length > 0 ? <PortfolioDetailGallery project={project} /> : null}
         </article>
