@@ -30,7 +30,7 @@
 - 홈 문구 `기록은 조금 더 나답게.`는 개인 공간의 방향을 나타냅니다.
 - 헤더의 `한마디`와 `요즘의 한마디` 카드는 제거했습니다.
 - 다이어리는 사이드 프로젝트와 개발 과정을 담는 `개발 블로그`로 바꾸고, 블로그 글과 방명록 저장소로 Supabase를 선택했습니다.
-- Supabase 클라이언트 연결 코드, 개발 블로그/방명록 테이블과 RLS 정책을 담은 `supabase/setup.sql`을 준비했습니다. 프로젝트 URL·Publishable key 설정과 SQL 실행은 아직 남아 있습니다.
+- Supabase 프로젝트 `resume`(`ap-northeast-2`, ref `monlzpwtkzoipixmwqvy`)를 `seoby's db` 조직에 만들고, `supabase/setup.sql`로 `public`의 블로그·방명록 테이블과 RLS 정책을 적용했습니다. 프로젝트 URL과 Publishable key는 무시 처리된 `.env.local`에 설정했습니다. [작업 로그](docs/worklog/2610/2026-10-16.md)
 
 ## 현재 시안
 
@@ -60,7 +60,7 @@
 - 구현: `src/components/home/Miniroom.tsx`, `miniroom-engine.ts`, `miniroom-scenes.ts`. 웹 자산: `public/minihome/`.
 - 검증/재생성: `npm run test:miniroom`, `npm run assets:miniroom`.
 - [구현 로그·자산·검증 결과](docs/worklog/2610/2026-10-15.md#움직이는-미니룸-적용)
-- 개발 블로그와 방명록은 Supabase 연결을 준비 중이며, 실제 프로젝트 적용은 아직 완료되지 않았습니다.
+- 개발 블로그와 방명록 테이블은 Supabase에 적용 완료했습니다. 게시글 작성과 실제 웹 API 연동 검증은 남아 있습니다.
 
 ## 가구 상호작용 현재 구현
 

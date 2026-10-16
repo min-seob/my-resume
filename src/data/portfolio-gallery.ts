@@ -29,7 +29,7 @@ export const portfolioProjects: PortfolioProject[] = [
       id: "hero",
       label: "PICK 카드 펼침",
       alt: "우측 상단 닉네임만 흐리게 처리한 에즈아르카나 카드 펼침 화면",
-      src: "/portfolio/asarcana-home.png",
+      src: "/portfolio/asarcana-card-fan.png",
     },
     screens: [
       {
@@ -211,7 +211,7 @@ export const portfolioProjects: PortfolioProject[] = [
       id: "home",
       label: "메인 페이지",
       alt: "프리스타일 리부트 라운지 메인 페이지",
-      src: "/portfolio/freestyle-home.png",
+      src: "/portfolio/freestyle-main-20261015.png",
       fit: "contain",
     },
     screens: [
